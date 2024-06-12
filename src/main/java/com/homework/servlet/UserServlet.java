@@ -30,14 +30,14 @@ public class UserServlet extends HttpServlet {
         if (req.getParameter("id") != null) {
             try {
                 if (req.getParameter("id").equals("all")) {
-                    List<UserFullOutGoingDto> userDtoList = userService.findAll();
+                    List<UserOutGoingDto> userDtoList = userService.findAll();
                     resp.setStatus(HttpServletResponse.SC_OK);
                     response = objectMapper.writeValueAsString(userDtoList);
                 } else {
                     Long userId = Long.parseLong(req.getParameter("id"));
-                    UserFullOutGoingDto userFullOutGoingDto = userService.findById(userId);
+                    UserOutGoingDto userOutGoingDto = userService.findById(userId);
                     resp.setStatus(HttpServletResponse.SC_OK);
-                    response = objectMapper.writeValueAsString(userFullOutGoingDto);
+                    response = objectMapper.writeValueAsString(userOutGoingDto);
                 }
             } catch (NotFoundException e) {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -49,7 +49,7 @@ public class UserServlet extends HttpServlet {
         } else {
             try {
                 Long companyId = Long.parseLong(req.getParameter("company_id"));
-                List<UserFullOutGoingDto> userDtoList = userService.findByCompanyId(companyId);
+                List<UserOutGoingDto> userDtoList = userService.findByCompanyId(companyId);
                 resp.setStatus(HttpServletResponse.SC_OK);
                 response = objectMapper.writeValueAsString(userDtoList);
             } catch (NotFoundException e) {
@@ -81,11 +81,10 @@ public class UserServlet extends HttpServlet {
         resp.setContentType("application/json");
         String response = "";
         String requestBody = mapToJson(req);
-        Optional<UserIncomingDto> userIncomingDto;
+
         try {
-            userIncomingDto = Optional.ofNullable(objectMapper.readValue(requestBody, UserIncomingDto.class));
-            UserIncomingDto userIncoming = userIncomingDto.orElseThrow(IllegalArgumentException::new);
-            response = objectMapper.writeValueAsString(userService.save(userIncoming));
+            UserIncomingDto userIncomingDto = objectMapper.readValue(requestBody, UserIncomingDto.class);
+            response = objectMapper.writeValueAsString(userService.save(userIncomingDto));
         } catch (JsonProcessingException e) {
             response = "Ошибка при обработке JSON";
         } catch (NullPointerException e) {

@@ -27,18 +27,19 @@ public class PositionDtoMapperImpl implements PositionDtoMapper {
 
     @Override
     public PositionOutGoingDto map(Position position) {
-        List<UserOutGoingDto> userList = position.getUsers()
-                .stream().map(user -> new UserOutGoingDto(
-                        user.getId(),
-                        user.getFirstname(),
-                        user.getLastname()
-                )).toList();
-
-        return new PositionOutGoingDto(
-                position.getId(),
-                position.getName(),
-                userList
-        );
+//        List<UserOutGoingDto> userList = position.getUsers()
+//                .stream().map(user -> new UserOutGoingDto(
+//                        user.getId(),
+//                        user.getFirstname(),
+//                        user.getLastname()
+//                )).toList();
+//
+//        return new PositionOutGoingDto(
+//                position.getId(),
+//                position.getName(),
+//                userList
+//        );
+        return null;
     }
 
     @Override

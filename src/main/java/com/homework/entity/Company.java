@@ -33,4 +33,7 @@ public class Company {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public void setId(Long id) {
+    }
 }

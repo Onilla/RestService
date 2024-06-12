@@ -1,19 +1,21 @@
 package com.homework.dto;
 
-import com.homework.entity.Company;
+import java.util.List;
 
 public class UserIncomingDto {
     private String firstname;
     private String lastname;
-    private Company company;
+    private Long companyId;
+    private List<Long> positions;
 
     public UserIncomingDto() {
     }
 
-    public UserIncomingDto(String firstname, String lastname, Company company) {
+    public UserIncomingDto(String firstname, String lastname, Long companyId, List<Long> positions) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.company = company;
+        this.companyId = companyId;
+        this.positions = positions;
     }
 
     public String getFirstname() {
@@ -24,7 +26,11 @@ public class UserIncomingDto {
         return lastname;
     }
 
-    public Company getCompany() {
-        return company;
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public List<Long> getPositions() {
+        return positions;
     }
 }

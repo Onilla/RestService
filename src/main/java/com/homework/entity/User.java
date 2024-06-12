@@ -1,11 +1,6 @@
 package com.homework.entity;
 
-import com.homework.repository.UserRepository;
-import com.homework.repository.impl.UserRepositoryImpl;
-
-
 import java.util.List;
-
 
 public class User {
 
@@ -14,9 +9,6 @@ public class User {
     private String lastname;
     private Company company;
     private List<Position> positions;
-    private final UserRepository userRepository = new UserRepositoryImpl();
-    public User() {
-    }
 
     public User(Long id, String firstname, String lastname, Company company, List<Position> positions) {
         this.id = id;
@@ -53,12 +45,23 @@ public class User {
     public void setCompany(Company company) {
         this.company = company;
     }
+    public Long getCompanyId() {
+        return this.company.getId();
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCompanyId(Long id) {
+        this.company.setId(id);
+    }
 
     public List<Position> getPositions() {
         return positions;
     }
-//    public void setPositions(List<Position> positions) {
-//        this.positions = positions;
-//    }
+
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
+    }
 }

@@ -10,7 +10,8 @@ public interface UserDtoMapper {
     User map(UserIncomingDto userIncomingDto);
 //    User map(UserUpdateDto userUpdateDto);
 
-    UserFullOutGoingDto map(User user);
-    List<UserFullOutGoingDto> map(List<User> userList);
+    UserOutGoingDto map(User user);
+    List<UserOutGoingDto> map(List<User> userList);
+
 
 }

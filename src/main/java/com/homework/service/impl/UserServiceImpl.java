@@ -1,7 +1,7 @@
 package com.homework.service.impl;
 
 import com.homework.dto.UserIncomingDto;
-import com.homework.dto.UserFullOutGoingDto;
+import com.homework.dto.UserOutGoingDto;
 import com.homework.dto.UserUpdateDto;
 import com.homework.dto.mappers.UserDtoMapper;
 import com.homework.dto.mappers.impl.UserDtoMapperImpl;
@@ -20,14 +20,14 @@ public class UserServiceImpl implements UserService {
     UserDtoMapper dtoMapper = new UserDtoMapperImpl();
 
     @Override
-    public UserFullOutGoingDto save(UserIncomingDto userIncomingDto) {
+    public UserOutGoingDto save(UserIncomingDto userIncomingDto) {
         User user = userRepository.save(dtoMapper.map(userIncomingDto));
-        return dtoMapper.map(userRepository.findById(user.getId()).orElse(user));
+        return dtoMapper.map(user);
 
     }
 
     @Override
-    public UserFullOutGoingDto findById(Long userId) throws NotFoundException {
+    public UserOutGoingDto findById(Long userId) throws NotFoundException {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundException("Пользователь не найден"));
         return dtoMapper.map(user);
@@ -46,13 +46,13 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public List<UserFullOutGoingDto> findAll() {
+    public List<UserOutGoingDto> findAll() {
         List<User> userList = userRepository.findAll();
         return dtoMapper.map(userList);
     }
 
     @Override
-    public List<UserFullOutGoingDto> findByCompanyId(Long companyId) throws NotFoundException{
+    public List<UserOutGoingDto> findByCompanyId(Long companyId) throws NotFoundException{
         List<User> userList = userRepository.findByCompanyId(companyId);
         return dtoMapper.map(userList);
     }
