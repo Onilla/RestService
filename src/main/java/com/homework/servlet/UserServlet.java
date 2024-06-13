@@ -10,7 +10,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,24 +48,11 @@ public class UserServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response = "Неверный аргумент";
             }
-        } else {
-            try {
-                Long companyId = Long.parseLong(req.getParameter("company_id"));
-                List<UserOutGoingDto> userDtoList = userService.findByCompanyId(companyId);
-                resp.setStatus(HttpServletResponse.SC_OK);
-                response = objectMapper.writeValueAsString(userDtoList);
-            } catch (NotFoundException e) {
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                response = e.getMessage();
-            } catch (Exception e) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response = "Неверный аргумент";
-            }
-        }
 
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.write(response);
-        printWriter.close();
+            PrintWriter printWriter = resp.getWriter();
+            printWriter.write(response);
+            printWriter.close();
+        }
     }
 
     private static String mapToJson(HttpServletRequest req) throws IOException {

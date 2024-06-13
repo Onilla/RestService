@@ -4,18 +4,18 @@ import com.homework.connection.ConnectionManager;
 import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Company;
 import com.homework.exception.DBException;
-import com.homework.repository.CompanyRepository;
+import com.homework.repository.Repository;
+import com.homework.repository.UserRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CompanyRepositoryImpl implements CompanyRepository {
-
+public class CompanyRepositoryImpl implements Repository<Company, Long> {
 
     private final ConnectionManager connectionManager = new ConnectionManagerImpl();
-
+    private final UserRepository userRepository = new UserRepositoryImpl();
 
     private static Company createCompany(ResultSet resultSet) throws SQLException {
         return new Company(resultSet.getLong("company_id"),
@@ -99,7 +99,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
             if (resultSet.next()) {
                 company = new Company(
                         resultSet.getLong("company_id"),
-                        company.getName());
+                        company.getName(),userRepository.findByCompanyId(company.getId()));
             }
         } catch (SQLException e) {
             throw new DBException(e);

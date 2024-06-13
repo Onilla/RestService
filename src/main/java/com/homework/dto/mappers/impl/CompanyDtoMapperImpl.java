@@ -5,6 +5,7 @@ import com.homework.dto.CompanyOutGoingDto;
 import com.homework.dto.CompanyUpdateDto;
 import com.homework.dto.mappers.CompanyDtoMapper;
 import com.homework.entity.Company;
+import com.homework.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,8 @@ public class CompanyDtoMapperImpl implements CompanyDtoMapper {
     public CompanyOutGoingDto map(Company company) {
         return new CompanyOutGoingDto(
                 company.getId(),
-                company.getName());
+                company.getName(),
+                company.getUsers().stream().map(User::getLastname).toList());
     }
     @Override
     public Company map(CompanyUpdateDto companyUpdateDto) {

@@ -8,8 +8,6 @@ public class Position {
     private String name;
     private List<User> users;
 
-
-
     public Position(Long id, String name) {
         this.id = id;
         this.name = name;

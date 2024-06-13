@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface UserRepository extends Repository <User,Long>{
     List<User> findByCompanyId(Long id);
-   // List<User> findUsersByPositionId(Long id);
 }

@@ -1,11 +1,19 @@
 package com.homework.entity;
 
 
+import java.util.List;
+
 public class Company {
 
     private Long id;
     private String name;
+    private List<User> users;
 
+    public Company(Long id, String name,List<User> users) {
+        this.id = id;
+        this.name = name;
+        this.users=users;
+    }
     public Company(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -14,8 +22,16 @@ public class Company {
     public Company() {
     }
 
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
 
     public void setId(Long id) {

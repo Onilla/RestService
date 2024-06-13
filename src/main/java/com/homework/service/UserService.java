@@ -18,5 +18,5 @@ public interface UserService {
     void update(UserUpdateDto userUpdateDto) throws NotFoundException;
 
     List<UserOutGoingDto> findAll();
-    List<UserOutGoingDto> findByCompanyId(Long id) throws NotFoundException;
+
 }

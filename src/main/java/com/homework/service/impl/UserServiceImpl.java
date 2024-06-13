@@ -13,11 +13,10 @@ import com.homework.service.UserService;
 
 import java.util.List;
 
-
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository = new UserRepositoryImpl();
-    UserDtoMapper dtoMapper = new UserDtoMapperImpl();
+    private final UserRepository userRepository = new UserRepositoryImpl();
+    private final UserDtoMapper dtoMapper = new UserDtoMapperImpl();
 
     @Override
     public UserOutGoingDto save(UserIncomingDto userIncomingDto) {
@@ -48,12 +47,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserOutGoingDto> findAll() {
         List<User> userList = userRepository.findAll();
-        return dtoMapper.map(userList);
-    }
-
-    @Override
-    public List<UserOutGoingDto> findByCompanyId(Long companyId) throws NotFoundException{
-        List<User> userList = userRepository.findByCompanyId(companyId);
         return dtoMapper.map(userList);
     }
 

@@ -3,12 +3,12 @@ package com.homework.dto;
 import java.util.List;
 
 public class PositionUpdateDto {
-    private Long Id;
+    private Long id;
     private String name;
     private List<Long> userIds;
 
     public PositionUpdateDto(Long id, String name, List<Long> userIds) {
-        Id = id;
+        this.id = id;
         this.name = name;
         this.userIds = userIds;
     }
@@ -16,11 +16,11 @@ public class PositionUpdateDto {
     public PositionUpdateDto(){}
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {

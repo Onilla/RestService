@@ -2,45 +2,22 @@ package com.homework.repository.impl;
 
 import com.homework.connection.ConnectionManager;
 import com.homework.connection.ConnectionManagerImpl;
+import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.exception.DBException;
-import com.homework.repository.CompanyRepository;
-import com.homework.repository.PositionRepository;
+import com.homework.repository.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PositionRepositoryImpl implements PositionRepository {
+public class PositionRepositoryImpl implements Repository<Position, Long> {
 
     private final ConnectionManager connectionManager = new ConnectionManagerImpl();
 
-    private final CompanyRepository companyRepository = new CompanyRepositoryImpl();
-
-//    @Override
-//    public List<Long> findPositionIdByUserId(Long id) {
-//        List<Long> positions = new ArrayList<>();
-//        String FIND_POSITION_BY_USER_ID = """
-//            SELECT position_id FROM users_positions
-//            WHERE user_id = ?;
-//            """;
-//        try (Connection connection = connectionManager.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(FIND_POSITION_BY_USER_ID)) {
-//
-//            preparedStatement.setLong(1, id);
-//
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                Long positionId = resultSet.getLong("position_id");
-//                positions.add(positionId);
-//            }
-//        } catch (SQLException e) {
-//            throw new DBException(e);
-//        }
-//        return positions;
-//    }
+    private final Repository<Company, Long> companyRepository = new CompanyRepositoryImpl();
 
     @Override
     public Optional<Position> findById(Long id) {
