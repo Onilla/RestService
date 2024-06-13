@@ -39,11 +39,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.deleteById(userId);
     }
 
-//    @Override
-//    public void update(UserUpdateDto userUpdateDto) throws NotFoundException {
-//        checkUserExistById(userUpdateDto.getId());
-//        userRepository.update(dtoMapper.map(userUpdateDto));
-//    }
+    @Override
+    public void update(UserUpdateDto userUpdateDto) throws NotFoundException {
+        checkUserExistById(userUpdateDto.getId());
+        userRepository.update(dtoMapper.map(userUpdateDto));
+    }
 
     @Override
     public List<UserOutGoingDto> findAll() {

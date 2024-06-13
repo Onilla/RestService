@@ -15,7 +15,7 @@ public interface UserService {
 
     boolean delete(Long id) throws NotFoundException;
 
-//    void update(UserUpdateDto userUpdateDto) throws NotFoundException;
+    void update(UserUpdateDto userUpdateDto) throws NotFoundException;
 
     List<UserOutGoingDto> findAll();
     List<UserOutGoingDto> findByCompanyId(Long id) throws NotFoundException;

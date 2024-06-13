@@ -21,6 +21,5 @@ CREATE TABLE IF NOT EXISTS users_positions
 (
     users_positions_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id              BIGINT REFERENCES users (user_id),
-    position_id        BIGINT REFERENCES positions (position_id),
-    CONSTRAINT unique_link UNIQUE (user_id, position_id)
+    position_id        BIGINT REFERENCES positions (position_id)
 );

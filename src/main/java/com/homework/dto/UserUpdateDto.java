@@ -10,17 +10,18 @@ public class UserUpdateDto {
     private Long id;
     private String firstname;
     private String lastname;
-    private Company company;
-    private List<PositionUpdateDto> positionUpdateDtoList;
+    private Long companyId;
+    private List<Long> positions;
+
     public UserUpdateDto() {
     }
 
-    public UserUpdateDto(Long id, String firstname, String lastname, Company company, List<PositionUpdateDto> positionUpdateDtoList) {
+    public UserUpdateDto(Long id, String firstname, String lastname, Long companyId, List<Long> positions) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.company = company;
-        this.positionUpdateDtoList=positionUpdateDtoList;
+        this.companyId = companyId;
+        this.positions=positions;
     }
 
     public Long getId() {
@@ -35,11 +36,11 @@ public class UserUpdateDto {
         return lastname;
     }
 
-    public Company getCompany() {
-        return company;
+    public Long getCompanyId() {
+        return companyId;
     }
 
-    public List<PositionUpdateDto> getPositionUpdateDtoList() {
-        return positionUpdateDtoList;
+    public List<Long> getPositions() {
+        return positions;
     }
 }

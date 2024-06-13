@@ -121,28 +121,26 @@ public class UserServlet extends HttpServlet {
         printWriter.close();
     }
 
-//    @Override
-//    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        resp.setContentType("application/json");
-//        String response = "";
-//        String requestBody = mapToJson(req);
-//
-//        try {
-//
-//            UserUpdateDto userUpdateDto = objectMapper.readValue(requestBody, UserUpdateDto.class);
-//            userService.update(userUpdateDto);
-//        } catch (JsonProcessingException e) {
-//            response = "Ошибка при обработке JSON";
-//        } catch (NotFoundException e) {
-//            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//            response = e.getMessage();
-//        } catch (Exception e) {
-//            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            response = "Неверный аргумент";
-//        }
-//
-//        PrintWriter printWriter = resp.getWriter();
-//        printWriter.write(response);
-//        printWriter.close();
-//    }
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
+        String response = "";
+        String requestBody = mapToJson(req);
+        try {
+            UserUpdateDto userUpdateDto = objectMapper.readValue(requestBody, UserUpdateDto.class);
+            userService.update(userUpdateDto);
+        } catch (JsonProcessingException e) {
+            response = "Ошибка при обработке JSON";
+        } catch (NotFoundException e) {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response = e.getMessage();
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response = "Неверный аргумент";
+        }
+
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.write(response);
+        printWriter.close();
+    }
 }

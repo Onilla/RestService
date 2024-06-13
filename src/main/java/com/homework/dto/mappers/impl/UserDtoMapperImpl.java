@@ -55,16 +55,26 @@ public class UserDtoMapperImpl implements UserDtoMapper {
                 );
 
     }
-//    @Override
-//    public User map(UserUpdateDto userUpdateDto) {
-//        return new User(
-//                userUpdateDto.getId(),
-//                userUpdateDto.getFirstname(),
-//                userUpdateDto.getLastname(),
-//                userUpdateDto.getCompany(),
-//                positionDtoMapper.map(userUpdateDto.getPositionUpdateDtoList())
-//        );
-//    }
+    @Override
+    public User map(UserUpdateDto userUpdateDto) {
+        List<Optional<Position>> list = userUpdateDto.getPositions()
+                .stream()
+                .map(id -> positionRepository.findById(id))
+                .collect(Collectors.toList());
+        List<Position> positions = new ArrayList<>();
+        for (Optional<Position> p:list){
+            if (p.isPresent()) {
+                positions.add(p.get());
+            }
+        }
+        Company company = companyRepository.findById(userUpdateDto.getCompanyId()).orElse(null);
+        return new User(
+                userUpdateDto.getId(),
+                userUpdateDto.getFirstname(),
+                userUpdateDto.getLastname(),
+                company,positions
+        );
+    }
     @Override
     public List<UserOutGoingDto> map(List<User> userList){
         List<UserOutGoingDto> userOutGoingDtoList = new ArrayList<>();
