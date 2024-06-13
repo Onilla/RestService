@@ -1,9 +1,5 @@
 package com.homework.entity;
 
-import com.homework.repository.UserRepository;
-import com.homework.repository.impl.UserRepositoryImpl;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Position {
@@ -11,7 +7,8 @@ public class Position {
     private Long id;
     private String name;
     private List<User> users;
-    private final UserRepository userRepository = new UserRepositoryImpl();
+
+
 
     public Position(Long id, String name) {
         this.id = id;
@@ -31,14 +28,15 @@ public class Position {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
     public List<User> getUsers() {
-        if (users == null) {
-            users = userRepository.findUsersByPositionId(this.id);
-        }
         return users;
     }
 

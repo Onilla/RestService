@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homework.dto.*;
 import com.homework.exception.NotFoundException;
-import com.homework.service.CompanyService;
 import com.homework.service.PositionService;
-import com.homework.service.impl.CompanyServiceImpl;
 import com.homework.service.impl.PositionServiceImpl;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,40 +17,44 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet(name = "PositionServlet", value = "/position/*")
+@WebServlet(name = "PositionServlet", value = "/position")
 public class PositionServlet extends HttpServlet {
-    private final PositionService positionService = new PositionServiceImpl();
+    private final transient PositionService positionService = new PositionServiceImpl();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
- //   @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//
-//        resp.setContentType("application/json");
-//        String response = "";
-//        try {
-//            if (req.getParameter("id").equals("all")) {
-//                List<PositionOutGoingDto> positions = positionService.findAll();
-//                resp.setStatus(HttpServletResponse.SC_OK);
-//                response = objectMapper.writeValueAsString(companyDtoList);
-//            }
-//            else {
-//                Long companyId = Long.parseLong(req.getParameter("id"));
-//                CompanyOutGoingDto companyOutGoingDto = positionService.findById(companyId);
-//                resp.setStatus(HttpServletResponse.SC_OK);
-//                response = objectMapper.writeValueAsString(companyOutGoingDto);
-//            }
-//        } catch (NotFoundException e) {
-//            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//            response = e.getMessage();
-//        } catch (Exception e) {
-//            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            response = "Неверный аргумент";
-//        }
-//        PrintWriter printWriter = resp.getWriter();
-//        printWriter.write(response);
-//        printWriter.flush();
-//
-//    }
+    private static void setJson(HttpServletResponse resp) {
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+    }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+       setJson(resp);
+        String response;
+        try {
+            if (req.getParameter("id").equals("all")) {
+                List<PositionOutGoingDto> positions = positionService.findAll();
+                resp.setStatus(HttpServletResponse.SC_OK);
+                response = objectMapper.writeValueAsString(positions);
+            }
+            else {
+                Long companyId = Long.parseLong(req.getParameter("id"));
+                PositionOutGoingDto positionOutGoingDto = positionService.findById(companyId);
+                resp.setStatus(HttpServletResponse.SC_OK);
+                response = objectMapper.writeValueAsString(positionOutGoingDto);
+            }
+        } catch (NotFoundException e) {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response = e.getMessage();
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response = "Неверный аргумент";
+        }
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.write(response);
+        printWriter.flush();
+
+    }
     private static String mapToJson(HttpServletRequest req) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = req.getReader();
@@ -62,11 +64,12 @@ public class PositionServlet extends HttpServlet {
         }
         return sb.toString();
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
+        setJson(resp);
         String requestBody = mapToJson(req);
-        String response = "";
+        String response;
         Optional<PositionIncomingDto> positionIncomingDto;
         try {
             positionIncomingDto = Optional.ofNullable(objectMapper.readValue(requestBody, PositionIncomingDto.class));
@@ -86,47 +89,47 @@ public class PositionServlet extends HttpServlet {
         printWriter.close();
     }
 
-//    @Override
-//    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        String response = "";
-//        try {
-//            Long companyId = Long.parseLong(req.getParameter("id"));
-//            if (positionService.delete(companyId)) {
-//                resp.setStatus(HttpServletResponse.SC_OK);
-//                response = "Koмпания удалена";
-//            }
-//        } catch (NotFoundException e) {
-//            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//            response = e.getMessage();
-//        } catch (Exception e) {
-//            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            response = "Неверный аргумент";
-//        }
-//        PrintWriter printWriter = resp.getWriter();
-//        printWriter.write(response);
-//        printWriter.close();
-//    }
-//
-//    @Override
-//    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        resp.setContentType("application/json");
-//        String response = "";
-//        String requestBody = mapToJson(req);
-//        try {
-//            CompanyUpdateDto companyUpdateDto = objectMapper.readValue(requestBody, CompanyUpdateDto.class);
-//            positionService.update(companyUpdateDto);
-//        } catch (JsonProcessingException e) {
-//            response = "Ошибка при обработке JSON";
-//        } catch (NotFoundException e) {
-//            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//            response = e.getMessage();
-//        } catch (Exception e) {
-//            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            response = "Неверный аргумент";
-//        }
-//
-//        PrintWriter printWriter = resp.getWriter();
-//        printWriter.write(response);
-//        printWriter.close();
-//    }
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String response = "";
+        try {
+            Long positionId = Long.parseLong(req.getParameter("id"));
+            if (positionService.delete(positionId)) {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                response = "Должность удалена";
+            }
+        } catch (NotFoundException e) {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response = e.getMessage();
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response = "Неверный аргумент";
+        }
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.write(response);
+        printWriter.close();
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        setJson(resp);
+        String response = "";
+        String requestBody = mapToJson(req);
+        try {
+            PositionUpdateDto positionUpdateDto = objectMapper.readValue(requestBody, PositionUpdateDto.class);
+            positionService.update(positionUpdateDto);
+        } catch (JsonProcessingException e) {
+            response = "Ошибка при обработке JSON";
+        } catch (NotFoundException e) {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response = e.getMessage();
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response = "Неверный аргумент";
+        }
+
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.write(response);
+        printWriter.close();
+    }
 }

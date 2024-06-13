@@ -1,7 +1,5 @@
 package com.homework.dto;
 
-import com.homework.entity.Position;
-
 import java.util.List;
 
 public class UserOutGoingDto {

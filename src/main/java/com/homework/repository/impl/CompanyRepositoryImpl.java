@@ -3,6 +3,7 @@ package com.homework.repository.impl;
 import com.homework.connection.ConnectionManager;
 import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Company;
+import com.homework.exception.DBException;
 import com.homework.repository.CompanyRepository;
 
 import java.sql.*;
@@ -12,34 +13,8 @@ import java.util.Optional;
 
 public class CompanyRepositoryImpl implements CompanyRepository {
 
-    private final String SAVE_COMPANY = """
-            INSERT INTO companies (company_name)
-            VALUES (?) ;
-            """;
-    private final String FIND_COMPANY_BY_ID = """
-            SELECT company_id, company_name FROM companies
-            WHERE company_id = ?
-            """;
-    private final String DELETE_COMPANY_BY_ID = """
-            DELETE FROM companies
-            WHERE company_id = ? ;
-            """;
-    private final String EXIST_COMPANY_BY_ID = """
-                SELECT exists (
-                SELECT 1 FROM companies
-                WHERE company_id = ?);
-            """;
 
-    private final String UPDATE_COMPANY = """
-            UPDATE companies
-            SET company_name = ?
-            WHERE company_id = ?  ;
-            """;
-    private final String FIND_ALL_COMPANIES = """
-            SELECT company_id, company_name FROM companies ;
-            """;
-
-    private ConnectionManager connectionManager = new ConnectionManagerImpl();
+    private final ConnectionManager connectionManager = new ConnectionManagerImpl();
 
 
     private static Company createCompany(ResultSet resultSet) throws SQLException {
@@ -50,6 +25,10 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     @Override
     public Optional<Company> findById(Long id) {
         Company company = null;
+        String FIND_COMPANY_BY_ID = """
+            SELECT company_id, company_name FROM companies
+            WHERE company_id = ?
+            """;
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COMPANY_BY_ID)) {
 
@@ -60,22 +39,26 @@ public class CompanyRepositoryImpl implements CompanyRepository {
                 company = createCompany(resultSet);
             }
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DBException(e);
         }
         return Optional.ofNullable(company);
     }
 
     @Override
     public boolean deleteById(Long id) {
-        boolean deleteResult = false;
+        boolean deleteResult;
+        String DELETE_COMPANY_BY_ID = """
+            DELETE FROM companies
+            WHERE company_id = ? ;
+            """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPANY_BY_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMPANY_BY_ID)) {
 
             preparedStatement.setLong(1, id);
 
             deleteResult = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DBException(e);
         }
         return deleteResult;
     }
@@ -83,6 +66,9 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     @Override
     public List<Company> findAll() {
         List<Company> companyList = new ArrayList<>();
+        String FIND_ALL_COMPANIES = """
+            SELECT company_id, company_name FROM companies ;
+            """;
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_COMPANIES)) {
 
@@ -91,13 +77,17 @@ public class CompanyRepositoryImpl implements CompanyRepository {
                 companyList.add(createCompany(resultSet));
             }
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DBException(e);
         }
         return companyList;
     }
 
     @Override
     public Company save(Company company) {
+        String SAVE_COMPANY = """
+            INSERT INTO companies (company_name)
+            VALUES (?) ;
+            """;
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_COMPANY, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -112,16 +102,20 @@ public class CompanyRepositoryImpl implements CompanyRepository {
                         company.getName());
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка сохранения в базу данных");
+            throw new DBException(e);
         }
         return company;
     }
 
     @Override
     public void update(Company company) {
-
+        String UPDATE_COMPANY = """
+            UPDATE companies
+            SET company_name = ?
+            WHERE company_id = ?  ;
+            """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COMPANY);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COMPANY)) {
 
             preparedStatement.setString(1, company.getName());
             preparedStatement.setLong(2, company.getId());
@@ -129,7 +123,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DBException(e);
         }
     }
 
@@ -137,6 +131,11 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     @Override
     public boolean existById(Long id) {
         boolean isExists = false;
+        String EXIST_COMPANY_BY_ID = """
+                SELECT exists (
+                SELECT 1 FROM companies
+                WHERE company_id = ?);
+            """;
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(EXIST_COMPANY_BY_ID)) {
 
@@ -147,7 +146,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
                 isExists = resultSet.getBoolean(1);
             }
         } catch (SQLException e) {
-            e.getMessage();
+            throw new DBException(e);
         }
         return isExists;
     }

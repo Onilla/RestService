@@ -1,46 +1,46 @@
 package com.homework.servlet;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homework.dto.CompanyIncomingDto;
 import com.homework.dto.CompanyOutGoingDto;
 import com.homework.dto.CompanyUpdateDto;
-import com.homework.dto.mappers.CompanyDtoMapper;
-import com.homework.entity.Company;
+
 import com.homework.exception.NotFoundException;
 import com.homework.service.CompanyService;
 import com.homework.service.impl.CompanyServiceImpl;
-import jakarta.servlet.ServletException;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.io.IOUtils;
+
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet(name = "CompanyServlet", value = "/company/*")
+@WebServlet(name = "CompanyServlet", value = "/company")
 public class CompanyServlet extends HttpServlet {
 
-    private final CompanyService companyService = new CompanyServiceImpl();
+    private final transient CompanyService companyService = new CompanyServiceImpl();
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private static void setJson(HttpServletResponse resp) {
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        resp.setContentType("application/json");
-        String response = "";
+        setJson(resp);
+        String response;
         try {
             if (req.getParameter("id").equals("all")) {
                 List<CompanyOutGoingDto> companyDtoList = companyService.findAll();
                 resp.setStatus(HttpServletResponse.SC_OK);
                 response = objectMapper.writeValueAsString(companyDtoList);
-            }
-            else {
+            } else {
                 Long companyId = Long.parseLong(req.getParameter("id"));
                 CompanyOutGoingDto companyOutGoingDto = companyService.findById(companyId);
                 resp.setStatus(HttpServletResponse.SC_OK);
@@ -58,6 +58,7 @@ public class CompanyServlet extends HttpServlet {
         printWriter.flush();
 
     }
+
     private static String mapToJson(HttpServletRequest req) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = req.getReader();
@@ -67,11 +68,12 @@ public class CompanyServlet extends HttpServlet {
         }
         return sb.toString();
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
+        setJson(resp);
         String requestBody = mapToJson(req);
-        String response = "";
+        String response;
         Optional<CompanyIncomingDto> companyIncomingDto;
         try {
             companyIncomingDto = Optional.ofNullable(objectMapper.readValue(requestBody, CompanyIncomingDto.class));
@@ -79,10 +81,9 @@ public class CompanyServlet extends HttpServlet {
             response = objectMapper.writeValueAsString(companyService.save(incomingDto));
         } catch (JsonProcessingException e) {
             response = "Ошибка при обработке JSON";
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             response = "Не удалось сохранить компанию";
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response = "Неверный аргумент";
         }
@@ -115,7 +116,7 @@ public class CompanyServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
+        setJson(resp);
         String response = "";
         String requestBody = mapToJson(req);
         try {

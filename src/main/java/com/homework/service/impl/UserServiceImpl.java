@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService {
         return dtoMapper.map(userList);
     }
 
-    private void checkUserExistById(Long companyId) throws NotFoundException {
-        if (!userRepository.existById(companyId)) {
+    private void checkUserExistById(Long userId) throws NotFoundException {
+        if (!userRepository.existById(userId)) {
             throw new NotFoundException("Пользователь не найден");
         }
     }

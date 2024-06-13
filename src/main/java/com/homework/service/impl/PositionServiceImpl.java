@@ -5,7 +5,6 @@ import com.homework.dto.PositionOutGoingDto;
 import com.homework.dto.PositionUpdateDto;
 import com.homework.dto.mappers.PositionDtoMapper;
 import com.homework.dto.mappers.impl.PositionDtoMapperImpl;
-import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.exception.NotFoundException;
 import com.homework.repository.PositionRepository;
@@ -27,21 +26,32 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public PositionOutGoingDto findById(Long id) throws NotFoundException {
-        return null;
+        Position position = positionRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("Должность не найдена"));
+        return dtoMapper.map(position);
     }
 
     @Override
     public boolean delete(Long id) throws NotFoundException {
-        return false;
+        checkPositionExistById(id);
+        return positionRepository.deleteById(id);
     }
 
     @Override
     public void update(PositionUpdateDto positionUpdateDto) throws NotFoundException {
+        checkPositionExistById(positionUpdateDto.getId());
+        positionRepository.update(dtoMapper.map(positionUpdateDto));
+    }
 
+    private void checkPositionExistById(Long positionId) throws NotFoundException {
+        if (!positionRepository.existById(positionId)) {
+            throw new NotFoundException("Должность не найдена");
+        }
     }
 
     @Override
     public List<PositionOutGoingDto> findAll() {
-        return null;
+        List<Position> positionList = positionRepository.findAll();
+        return dtoMapper.map(positionList);
     }
 }

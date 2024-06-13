@@ -17,7 +17,12 @@ public class User {
         this.company = company;
         this.positions = positions;
     }
-
+    public User(Long id, String firstname, String lastname, Company company) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.company = company;
+    }
     public Long getId() {
         return id;
     }

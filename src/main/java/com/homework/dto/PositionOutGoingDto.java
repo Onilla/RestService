@@ -5,9 +5,9 @@ import java.util.List;
 public class PositionOutGoingDto {
     private Long id;
     private String name;
-    private List<UserOutGoingDto> userList;
+    private List<String> userList;
 
-    public PositionOutGoingDto(Long id, String name, List<UserOutGoingDto> userList) {
+    public PositionOutGoingDto(Long id, String name, List<String> userList) {
         this.id = id;
         this.name = name;
         this.userList = userList;
@@ -21,7 +21,7 @@ public class PositionOutGoingDto {
         return name;
     }
 
-    public List<UserOutGoingDto> getUserList() {
+    public List<String> getUserList() {
         return userList;
     }
 }

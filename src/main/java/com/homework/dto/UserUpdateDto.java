@@ -1,7 +1,5 @@
 package com.homework.dto;
 
-import com.homework.entity.Company;
-
 import java.util.List;
 
 public class UserUpdateDto {

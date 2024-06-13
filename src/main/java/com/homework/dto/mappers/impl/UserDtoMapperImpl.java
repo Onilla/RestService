@@ -19,18 +19,16 @@ import java.util.stream.Collectors;
 
 public class UserDtoMapperImpl implements UserDtoMapper {
 
-    CompanyDtoMapper companyDtoMapper = new CompanyDtoMapperImpl();
-    PositionDtoMapper positionDtoMapper = new PositionDtoMapperImpl();
     PositionRepository positionRepository = new PositionRepositoryImpl();
     CompanyRepository companyRepository = new CompanyRepositoryImpl();
     @Override
     public User map(UserIncomingDto userIncomingDto) {
-        List<Optional<Position>> list = userIncomingDto.getPositions()
+        List<Optional<Position>> listPositions = userIncomingDto.getPositions()
                 .stream()
                 .map(id -> positionRepository.findById(id))
                 .collect(Collectors.toList());
         List<Position> positions = new ArrayList<>();
-        for (Optional<Position> p:list){
+        for (Optional<Position> p:listPositions){
             if (p.isPresent()) {
                 positions.add(p.get());
             }

@@ -15,18 +15,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Optional;
 
-@WebServlet(name = "UserServlet", value = "/user/*")
+@WebServlet(name = "UserServlet", value = "/user")
 public class UserServlet extends HttpServlet {
 
-    private final UserService userService = new UserServiceImpl();
+    private final transient UserService userService = new UserServiceImpl();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private static void setJson(HttpServletResponse resp) {
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        String response = "";
+        setJson(resp);
+        String response;
         if (req.getParameter("id") != null) {
             try {
                 if (req.getParameter("id").equals("all")) {
@@ -78,8 +81,8 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        String response = "";
+        setJson(resp);
+        String response;
         String requestBody = mapToJson(req);
 
         try {
@@ -123,7 +126,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
+        setJson(resp);
         String response = "";
         String requestBody = mapToJson(req);
         try {
