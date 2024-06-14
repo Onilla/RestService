@@ -8,8 +8,5 @@ public class Main {
     public static void main(String[] args) {
         ConnectionManager connectionManager = new ConnectionManagerImpl();
         CreateSchemaSql.createSqlScheme(connectionManager);
-       // CreateSchemaSql.initSqlData(connectionManager);
-
-
     }
 }

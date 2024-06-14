@@ -23,6 +23,16 @@ public class User {
         this.lastname = lastname;
         this.company = company;
     }
+    public User(Long id, String lastname) {
+        this.id = id;
+        this.lastname = lastname;
+    }
+
+    public User(Long id, String firstname, String lastname) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
     public Long getId() {
         return id;
     }

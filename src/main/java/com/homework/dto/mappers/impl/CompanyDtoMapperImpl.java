@@ -22,10 +22,18 @@ public class CompanyDtoMapperImpl implements CompanyDtoMapper {
 
     @Override
     public CompanyOutGoingDto map(Company company) {
-        return new CompanyOutGoingDto(
-                company.getId(),
-                company.getName(),
-                company.getUsers().stream().map(User::getLastname).toList());
+        CompanyOutGoingDto companyOutGoingDto;
+        if (!(company.getUsers() == null)) {
+            companyOutGoingDto= new CompanyOutGoingDto(
+                    company.getId(),
+                    company.getName(),
+                    company.getUsers().stream().map(User::getLastname).toList());
+        } else {
+            companyOutGoingDto = new  CompanyOutGoingDto(
+                    company.getId(),
+                    company.getName());
+        }
+    return companyOutGoingDto;
     }
     @Override
     public Company map(CompanyUpdateDto companyUpdateDto) {

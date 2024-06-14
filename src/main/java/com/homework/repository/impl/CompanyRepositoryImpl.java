@@ -3,31 +3,47 @@ package com.homework.repository.impl;
 import com.homework.connection.ConnectionManager;
 import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Company;
+import com.homework.entity.User;
 import com.homework.exception.DBException;
-import com.homework.repository.Repository;
-import com.homework.repository.UserRepository;
+import com.homework.repository.CompanyRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CompanyRepositoryImpl implements Repository<Company, Long> {
+public class CompanyRepositoryImpl implements CompanyRepository {
 
     private final ConnectionManager connectionManager = new ConnectionManagerImpl();
-    private final UserRepository userRepository = new UserRepositoryImpl();
 
-    private static Company createCompany(ResultSet resultSet) throws SQLException {
-        return new Company(resultSet.getLong("company_id"),
-                resultSet.getString("company_name"));
+    private Company createCompany(ResultSet resultSet) throws SQLException {
+        String FIND_USERS_BY_COMPANY_ID = """
+            SELECT user_id, user_firstname, user_lastname, u.company_id FROM users AS u
+            INNER JOIN companies AS c ON u.company_id = c.company_id
+            WHERE u.company_id = ?
+            """;
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement findUsers = connection.prepareStatement(FIND_USERS_BY_COMPANY_ID)) {
+             long companyId = resultSet.getLong("company_id");
+            findUsers.setLong(1, companyId);
+            List<User> users = new ArrayList<>();
+            ResultSet resultUsers = findUsers.executeQuery();
+            while (resultUsers.next()) {
+                User user = new User(resultUsers.getLong("user_id"),
+                        resultUsers.getString("user_lastname"));
+                users.add(user);
+            }
+
+            return new Company(resultSet.getLong("company_id"),
+                resultSet.getString("company_name"),users);
     }
-
+}
     @Override
     public Optional<Company> findById(Long id) {
         Company company = null;
         String FIND_COMPANY_BY_ID = """
-            SELECT company_id, company_name FROM companies
-            WHERE company_id = ?
+            SELECT company_id, company_name FROM companies AS c
+            WHERE c.company_id = ?
             """;
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COMPANY_BY_ID)) {
@@ -89,17 +105,15 @@ public class CompanyRepositoryImpl implements Repository<Company, Long> {
             VALUES (?) ;
             """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SAVE_COMPANY, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement saveCompany = connection.prepareStatement(SAVE_COMPANY, Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setString(1, company.getName());
+            saveCompany.setString(1, company.getName());
 
-            preparedStatement.executeUpdate();
+            saveCompany.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = saveCompany.getGeneratedKeys();
             if (resultSet.next()) {
-                company = new Company(
-                        resultSet.getLong("company_id"),
-                        company.getName(),userRepository.findByCompanyId(company.getId()));
+                company.setId(resultSet.getLong(1));
             }
         } catch (SQLException e) {
             throw new DBException(e);

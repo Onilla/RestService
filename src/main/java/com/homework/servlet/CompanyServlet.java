@@ -1,21 +1,16 @@
 package com.homework.servlet;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homework.dto.CompanyIncomingDto;
 import com.homework.dto.CompanyOutGoingDto;
 import com.homework.dto.CompanyUpdateDto;
-
 import com.homework.exception.NotFoundException;
 import com.homework.service.CompanyService;
 import com.homework.service.impl.CompanyServiceImpl;
-
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-
 import java.io.*;
 import java.util.List;
 import java.util.Optional;
@@ -81,11 +76,9 @@ public class CompanyServlet extends HttpServlet {
             response = objectMapper.writeValueAsString(companyService.save(incomingDto));
         } catch (JsonProcessingException e) {
             response = "Ошибка при обработке JSON";
-        } catch (NullPointerException e) {
-            response = "Не удалось сохранить компанию";
-        } catch (Exception e) {
+        }  catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response = "Неверный аргумент";
+            response = "Не удалось сохранить компанию";
         }
 
         PrintWriter printWriter = resp.getWriter();

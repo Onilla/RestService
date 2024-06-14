@@ -15,6 +15,10 @@ public class CompanyOutGoingDto {
         this.name = name;
         this.users = users;
     }
+    public CompanyOutGoingDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -26,5 +30,17 @@ public class CompanyOutGoingDto {
 
     public List<String> getUsers() {
         return users;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsers(List<String> users) {
+        this.users = users;
     }
 }

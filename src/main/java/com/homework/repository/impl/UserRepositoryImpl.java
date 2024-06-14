@@ -1,13 +1,10 @@
 package com.homework.repository.impl;
-
 import com.homework.connection.ConnectionManager;
 import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.exception.DBException;
-
-import com.homework.repository.Repository;
 import com.homework.repository.UserRepository;
 
 import java.sql.*;
@@ -18,8 +15,6 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
     private final ConnectionManager connectionManager = new ConnectionManagerImpl();
-    private final Repository<Company, Long> companyRepository = new CompanyRepositoryImpl();
-
 
     private User createUser(ResultSet resultSet) throws SQLException {
         String FIND_ALL_POSITIONS_BY_USER_ID = """
@@ -28,24 +23,35 @@ public class UserRepositoryImpl implements UserRepository {
                 INNER JOIN users AS u ON u.user_id = up.user_id
                 WHERE u.user_id = ?;
                 """;
+        String FIND_COMPANY_BY_COMPANY_ID = """
+                SELECT company_id, company_name FROM companies
+                WHERE company_id = ?;
+                """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_POSITIONS_BY_USER_ID)) {
-
+             PreparedStatement findPositions = connection.prepareStatement(FIND_ALL_POSITIONS_BY_USER_ID);
+             PreparedStatement findCompany = connection.prepareStatement(FIND_COMPANY_BY_COMPANY_ID)) {
+            long companyId = resultSet.getLong("company_id");
+            Company company = new Company();
+            findCompany.setLong(1, companyId);
+            ResultSet resultCompany = findCompany.executeQuery();
+            if (resultCompany.next()) {
+                String companyName = resultCompany.getString("company_name");
+                company.setId(companyId);
+                company.setName(companyName);
+            }
             long userId = resultSet.getLong("user_id");
-            preparedStatement.setLong(1, userId);
-            ResultSet resultPositions = preparedStatement.executeQuery();
+            findPositions.setLong(1, userId);
             List<Position> positions = new ArrayList<>();
+            ResultSet resultPositions = findPositions.executeQuery();
             while (resultPositions.next()) {
                 Position position = new Position(resultPositions.getLong("position_id"),
                         resultPositions.getString("position_name"));
                 positions.add(position);
             }
-            Company company = companyRepository.findById(resultSet.getLong("company_id")).orElse(null);
             return new User(userId,
                     resultSet.getString("user_firstname"),
                     resultSet.getString("user_lastname"),
                     company, positions);
-
         }
     }
 
@@ -100,7 +106,7 @@ public class UserRepositoryImpl implements UserRepository {
                 """;
         List<User> usersList = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -118,29 +124,30 @@ public class UserRepositoryImpl implements UserRepository {
                 INSERT INTO users (user_firstname, user_lastname, company_id)
                 VALUES (?, ? ,?) ;
                 """;
-        String SAVE_USERS_AND_POSITIONS = "INSERT INTO users_positions (user_id, position_id) VALUES (?, ?)";
-        try (Connection connection = connectionManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER, Statement.RETURN_GENERATED_KEYS);
+        String SAVE_USERS_AND_POSITIONS =
+                "INSERT INTO users_positions (user_id, position_id) VALUES (?, ?)";
+        try (Connection connection = connectionManager.getConnection();
+            PreparedStatement saveUser = connection.prepareStatement(SAVE_USER, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement saveUsersAndPositions = connection.prepareStatement(SAVE_USERS_AND_POSITIONS)) {
             connection.setAutoCommit(false);
-            preparedStatement.setString(1, user.getFirstname());
-            preparedStatement.setString(2, user.getLastname());
+            saveUser.setString(1, user.getFirstname());
+            saveUser.setString(2, user.getLastname());
             if (user.getCompany() == null) {
-                preparedStatement.setNull(3, Types.NULL);
+                saveUser.setNull(3, Types.NULL);
             } else {
-                preparedStatement.setLong(3, user.getCompany().getId());
+                saveUser.setLong(3, user.getCompany().getId());
             }
-            preparedStatement.executeUpdate();
+            saveUser.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = saveUser.getGeneratedKeys();
             if (resultSet.next()) {
                 user.setId(resultSet.getLong(1));
             }
             if (!user.getPositions().isEmpty()) {
-                preparedStatement = connection.prepareStatement(SAVE_USERS_AND_POSITIONS);
                 for (Position position : user.getPositions()) {
-                    preparedStatement.setLong(1, user.getId());
-                    preparedStatement.setLong(2, position.getId());
-                    preparedStatement.executeUpdate();
+                    saveUsersAndPositions.setLong(1, user.getId());
+                    saveUsersAndPositions.setLong(2, position.getId());
+                    saveUsersAndPositions.executeUpdate();
                 }
             }
             connection.commit();
@@ -157,25 +164,30 @@ public class UserRepositoryImpl implements UserRepository {
                 SET user_firstname = ?, user_lastname = ?, company_id = ?
                 WHERE user_id = ?  ;
                 """;
-        String UPDATE_USERS_AND_POSITIONS = "UPDATE users_positions SET position_id = ? WHERE user_id=?;";
-        try (Connection connection = connectionManager.getConnection()) {
+        String UPDATE_USERS_AND_POSITIONS = """ 
+                UPDATE users_positions
+                 SET position_id = ?
+                 WHERE user_id=?;
+                """;
+        try (Connection connection = connectionManager.getConnection();
+            PreparedStatement updateUser = connection.prepareStatement(UPDATE_USER);
+            PreparedStatement updateUsersAndPositions = connection.prepareStatement(UPDATE_USERS_AND_POSITIONS))
+        {
             connection.setAutoCommit(false);
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER);
-            preparedStatement.setString(1, user.getFirstname());
-            preparedStatement.setString(2, user.getLastname());
+            updateUser.setString(1, user.getFirstname());
+            updateUser.setString(2, user.getLastname());
             if (user.getCompany() == null) {
-                preparedStatement.setNull(3, Types.NULL);
+                updateUser.setNull(3, Types.NULL);
             } else {
-                preparedStatement.setLong(3, user.getCompany().getId());
+                updateUser.setLong(3, user.getCompany().getId());
             }
-            preparedStatement.setLong(4, user.getId());
-            preparedStatement.executeUpdate();
+            updateUser.setLong(4, user.getId());
+            updateUser.executeUpdate();
             if (!user.getPositions().isEmpty()) {
-                preparedStatement = connection.prepareStatement(UPDATE_USERS_AND_POSITIONS);
                 for (Position position : user.getPositions()) {
-                    preparedStatement.setLong(1, position.getId());
-                    preparedStatement.setLong(2, user.getId());
-                    preparedStatement.executeUpdate();
+                    updateUsersAndPositions.setLong(1, position.getId());
+                    updateUsersAndPositions.setLong(2, user.getId());
+                    updateUsersAndPositions.executeUpdate();
                 }
             }
             connection.commit();
@@ -195,12 +207,12 @@ public class UserRepositoryImpl implements UserRepository {
                 WHERE user_id = ? ;
                 """;
         boolean deleteResult;
-        try (Connection connection = connectionManager.getConnection()) {
+        try (Connection connection = connectionManager.getConnection();
             PreparedStatement deleteUsersPositions = connection.prepareStatement(DELETE_USER_POSITIONS_BY_ID);
+            PreparedStatement deleteUser = connection.prepareStatement(DELETE_USER_BY_ID)) {
             connection.setAutoCommit(false);
             deleteUsersPositions.setLong(1, id);
             deleteUsersPositions.executeUpdate();
-            PreparedStatement deleteUser = connection.prepareStatement(DELETE_USER_BY_ID);
             deleteUser.setLong(1, id);
             deleteResult = deleteUser.executeUpdate() > 0;
             connection.commit();
@@ -210,7 +222,6 @@ public class UserRepositoryImpl implements UserRepository {
         return deleteResult;
     }
 
-
     @Override
     public boolean existById(Long id) {
         String EXIST_USER_BY_ID = """
@@ -219,12 +230,12 @@ public class UserRepositoryImpl implements UserRepository {
                     WHERE user_id = ?);
                 """;
         boolean isExists = false;
-        try (Connection connection = connectionManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(EXIST_USER_BY_ID);
+        try (Connection connection = connectionManager.getConnection();
+            PreparedStatement existUser = connection.prepareStatement(EXIST_USER_BY_ID)) {
 
-            preparedStatement.setLong(1, id);
+            existUser.setLong(1, id);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = existUser.executeQuery();
             if (resultSet.next()) {
                 isExists = resultSet.getBoolean(1);
             }

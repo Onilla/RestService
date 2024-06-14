@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "UserServlet", value = "/user")
+@WebServlet(name = "UserServlet", value = "/user/*")
 public class UserServlet extends HttpServlet {
 
     private final transient UserService userService = new UserServiceImpl();
