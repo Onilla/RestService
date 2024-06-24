@@ -1,4 +1,5 @@
 package com.homework.servlet;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homework.dto.CompanyIncomingDto;
@@ -11,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.*;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +20,7 @@ import java.util.Optional;
 @WebServlet(name = "CompanyServlet", value = "/company")
 public class CompanyServlet extends HttpServlet {
 
-    private final transient CompanyService companyService = new CompanyServiceImpl();
+    private transient CompanyService companyService = new CompanyServiceImpl();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static void setJson(HttpServletResponse resp) {
@@ -76,7 +78,7 @@ public class CompanyServlet extends HttpServlet {
             response = objectMapper.writeValueAsString(companyService.save(incomingDto));
         } catch (JsonProcessingException e) {
             response = "Ошибка при обработке JSON";
-        }  catch (Exception e) {
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response = "Не удалось сохранить компанию";
         }
@@ -91,10 +93,8 @@ public class CompanyServlet extends HttpServlet {
         String response = "";
         try {
             Long companyId = Long.parseLong(req.getParameter("id"));
-            if (companyService.delete(companyId)) {
-                resp.setStatus(HttpServletResponse.SC_OK);
-                response = "Koмпания удалена";
-            }
+            companyService.delete(companyId);
+            resp.setStatus(HttpServletResponse.SC_OK);
         } catch (NotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response = e.getMessage();

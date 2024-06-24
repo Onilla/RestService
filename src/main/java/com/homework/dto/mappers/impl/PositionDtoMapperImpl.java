@@ -6,7 +6,7 @@ import com.homework.dto.PositionUpdateDto;
 import com.homework.dto.mappers.PositionDtoMapper;
 import com.homework.entity.Position;
 import com.homework.entity.User;
-import com.homework.repository.UserRepository;
+import com.homework.repository.Repository;
 import com.homework.repository.impl.UserRepositoryImpl;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 
 public class PositionDtoMapperImpl implements PositionDtoMapper {
-    UserRepository userRepository = new UserRepositoryImpl();
+    Repository<User, Long> userRepository = new UserRepositoryImpl();
 
     @Override
     public List<User> createUsersList(PositionIncomingDto positionIncomingDto) {

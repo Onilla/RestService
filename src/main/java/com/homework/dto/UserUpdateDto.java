@@ -19,7 +19,7 @@ public class UserUpdateDto {
         this.firstname = firstname;
         this.lastname = lastname;
         this.companyId = companyId;
-        this.positions=positions;
+        this.positions = positions;
     }
 
     public Long getId() {

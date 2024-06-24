@@ -7,8 +7,6 @@ import com.homework.dto.mappers.CompanyDtoMapper;
 import com.homework.dto.mappers.impl.CompanyDtoMapperImpl;
 import com.homework.entity.Company;
 import com.homework.exception.NotFoundException;
-import com.homework.repository.CompanyRepository;
-
 import com.homework.repository.impl.CompanyRepositoryImpl;
 import com.homework.service.CompanyService;
 
@@ -16,7 +14,7 @@ import java.util.List;
 
 public class CompanyServiceImpl implements CompanyService {
 
-    private final CompanyRepository companyRepository = new CompanyRepositoryImpl();
+    private CompanyRepositoryImpl companyRepository = new CompanyRepositoryImpl();
     private final CompanyDtoMapper dtoMapper = new CompanyDtoMapperImpl();
 
     @Override

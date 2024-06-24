@@ -33,4 +33,20 @@ public class UserIncomingDto {
     public List<Long> getPositions() {
         return positions;
     }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
+    public void setPositions(List<Long> positions) {
+        this.positions = positions;
+    }
 }

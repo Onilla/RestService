@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,13 +19,14 @@ import java.util.List;
 @WebServlet(name = "UserServlet", value = "/user/*")
 public class UserServlet extends HttpServlet {
 
-    private final transient UserService userService = new UserServiceImpl();
+    private transient UserService userService = new UserServiceImpl();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static void setJson(HttpServletResponse resp) {
+    public static void setJson(HttpServletResponse resp) {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setJson(resp);
@@ -70,7 +72,6 @@ public class UserServlet extends HttpServlet {
         setJson(resp);
         String response;
         String requestBody = mapToJson(req);
-
         try {
             UserIncomingDto userIncomingDto = objectMapper.readValue(requestBody, UserIncomingDto.class);
             response = objectMapper.writeValueAsString(userService.save(userIncomingDto));
@@ -94,10 +95,8 @@ public class UserServlet extends HttpServlet {
         String response = "";
         try {
             Long userId = Long.parseLong(req.getParameter("id"));
-            if (userService.delete(userId)) {
-                resp.setStatus(HttpServletResponse.SC_OK);
-                response = "Пользователь удален";
-            }
+            userService.delete(userId);
+            resp.setStatus(HttpServletResponse.SC_OK);
         } catch (NotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response = e.getMessage();

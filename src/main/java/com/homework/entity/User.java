@@ -17,12 +17,14 @@ public class User {
         this.company = company;
         this.positions = positions;
     }
+
     public User(Long id, String firstname, String lastname, Company company) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.company = company;
     }
+
     public User(Long id, String lastname) {
         this.id = id;
         this.lastname = lastname;
@@ -33,6 +35,7 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
     }
+
     public Long getId() {
         return id;
     }
@@ -60,6 +63,7 @@ public class User {
     public void setCompany(Company company) {
         this.company = company;
     }
+
     public Long getCompanyId() {
         return this.company.getId();
     }

@@ -7,7 +7,6 @@ import com.homework.dto.mappers.UserDtoMapper;
 import com.homework.dto.mappers.impl.UserDtoMapperImpl;
 import com.homework.entity.User;
 import com.homework.exception.NotFoundException;
-import com.homework.repository.UserRepository;
 import com.homework.repository.impl.UserRepositoryImpl;
 import com.homework.service.UserService;
 
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository = new UserRepositoryImpl();
+    private UserRepositoryImpl userRepository = new UserRepositoryImpl();
     private final UserDtoMapper dtoMapper = new UserDtoMapperImpl();
 
     @Override

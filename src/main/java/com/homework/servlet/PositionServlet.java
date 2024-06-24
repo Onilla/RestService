@@ -19,25 +19,25 @@ import java.util.Optional;
 
 @WebServlet(name = "PositionServlet", value = "/position")
 public class PositionServlet extends HttpServlet {
-    private final transient PositionService positionService = new PositionServiceImpl();
+
+    private transient PositionService positionService = new PositionServiceImpl();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static void setJson(HttpServletResponse resp) {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-       setJson(resp);
+        setJson(resp);
         String response;
         try {
             if (req.getParameter("id").equals("all")) {
                 List<PositionOutGoingDto> positions = positionService.findAll();
                 resp.setStatus(HttpServletResponse.SC_OK);
                 response = objectMapper.writeValueAsString(positions);
-            }
-            else {
+            } else {
                 Long companyId = Long.parseLong(req.getParameter("id"));
                 PositionOutGoingDto positionOutGoingDto = positionService.findById(companyId);
                 resp.setStatus(HttpServletResponse.SC_OK);
@@ -55,6 +55,7 @@ public class PositionServlet extends HttpServlet {
         printWriter.flush();
 
     }
+
     private static String mapToJson(HttpServletRequest req) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = req.getReader();
@@ -77,10 +78,9 @@ public class PositionServlet extends HttpServlet {
             response = objectMapper.writeValueAsString(positionService.save(incomingDto));
         } catch (JsonProcessingException e) {
             response = "Ошибка при обработке JSON";
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             response = "Не удалось сохранить должность";
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response = "Неверный аргумент";
         }
@@ -94,10 +94,8 @@ public class PositionServlet extends HttpServlet {
         String response = "";
         try {
             Long positionId = Long.parseLong(req.getParameter("id"));
-            if (positionService.delete(positionId)) {
-                resp.setStatus(HttpServletResponse.SC_OK);
-                response = "Должность удалена";
-            }
+            positionService.delete(positionId);
+            resp.setStatus(HttpServletResponse.SC_OK);
         } catch (NotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response = e.getMessage();

@@ -13,7 +13,8 @@ public class PositionUpdateDto {
         this.userIds = userIds;
     }
 
-    public PositionUpdateDto(){}
+    public PositionUpdateDto() {
+    }
 
     public Long getId() {
         return id;

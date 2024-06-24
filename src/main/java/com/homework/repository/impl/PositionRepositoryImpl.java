@@ -5,26 +5,26 @@ import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.exception.DBException;
-import com.homework.repository.PositionRepository;
+import com.homework.repository.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PositionRepositoryImpl implements PositionRepository {
+public class PositionRepositoryImpl implements Repository<Position, Long> {
 
     private final ConnectionManager connectionManager = new ConnectionManagerImpl();
 
     @Override
     public Optional<Position> findById(Long id) {
-        String FIND_POSITION_BY_ID = """
+        String findPositionById = """
                 SELECT position_id, position_name FROM positions
                 WHERE position_id = ?;
                 """;
         Position position = null;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_POSITION_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(findPositionById)) {
 
             preparedStatement.setLong(1, id);
 
@@ -39,7 +39,7 @@ public class PositionRepositoryImpl implements PositionRepository {
     }
 
     private Position createPosition(ResultSet resultSet) throws SQLException {
-        String FIND_ALL_USERS_BY_POSITIONS_ID = """
+        String findAllUsersByPositionsId = """
                 SELECT u.user_id, user_firstname, user_lastname, u.company_id FROM users AS u
                 INNER JOIN users_positions AS up ON u.user_id = up.user_id
                 INNER JOIN positions AS p ON p.position_id = up.position_id
@@ -47,7 +47,7 @@ public class PositionRepositoryImpl implements PositionRepository {
                 """;
 
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement findUsers = connection.prepareStatement(FIND_ALL_USERS_BY_POSITIONS_ID)) {
+             PreparedStatement findUsers = connection.prepareStatement(findAllUsersByPositionsId)) {
             long positionId = resultSet.getLong("position_id");
             findUsers.setLong(1, positionId);
             ResultSet resultUsers = findUsers.executeQuery();
@@ -66,17 +66,17 @@ public class PositionRepositoryImpl implements PositionRepository {
     @Override
     public boolean deleteById(Long id) {
         boolean deleteResult;
-        String DELETE_POSITION_BY_USER_ID = """
+        String deletePositionByUserId = """
                 DELETE FROM users_positions
                 WHERE position_id = ? ;
                 """;
-        String DELETE_POSITION_BY_ID = """
+        String deletePositionById = """
                 DELETE FROM positions
                 WHERE position_id = ? ;
                 """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement deletePosition = connection.prepareStatement(DELETE_POSITION_BY_ID);
-             PreparedStatement deleteUsersPositions = connection.prepareStatement(DELETE_POSITION_BY_USER_ID)) {
+             PreparedStatement deletePosition = connection.prepareStatement(deletePositionById);
+             PreparedStatement deleteUsersPositions = connection.prepareStatement(deletePositionByUserId)) {
             connection.setAutoCommit(false);
             deleteUsersPositions.setLong(1, id);
             deleteUsersPositions.executeUpdate();
@@ -92,11 +92,11 @@ public class PositionRepositoryImpl implements PositionRepository {
     @Override
     public List<Position> findAll() {
         List<Position> positionList = new ArrayList<>();
-        String FIND_ALL_POSITIONS = """
+        String findAllPositions = """
                 SELECT position_id, position_name FROM positions ;
                 """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_POSITIONS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(findAllPositions)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -110,14 +110,14 @@ public class PositionRepositoryImpl implements PositionRepository {
 
     @Override
     public Position save(Position position) {
-        String SAVE_POSITION = """
+        String save = """
                 INSERT INTO positions (position_name)
                 VALUES (?) ;
                 """;
-        String SAVE_USERS_AND_POSITIONS = "INSERT INTO users_positions (user_id, position_id) VALUES (?, ?)";
+        String saveUsersAndPositions = "INSERT INTO users_positions (user_id, position_id) VALUES (?, ?)";
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement savePosition = connection.prepareStatement(SAVE_POSITION, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement saveUsersAndPosition = connection.prepareStatement(SAVE_USERS_AND_POSITIONS)) {
+             PreparedStatement savePosition = connection.prepareStatement(save, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement saveUsersAndPosition = connection.prepareStatement(saveUsersAndPositions)) {
             connection.setAutoCommit(false);
 
             savePosition.setString(1, position.getName());
@@ -147,18 +147,17 @@ public class PositionRepositoryImpl implements PositionRepository {
 
     @Override
     public void update(Position position) {
-        String UPDATE_POSITION = """
+        String update = """
                 UPDATE positions
                 SET position_name = ?
                 WHERE position_id = ?  ;
                 """;
-        String UPDATE_USERS_AND_POSITIONS = "UPDATE users_positions SET user_id = ? WHERE position_id=?;";
+        String updateUsersAndPositions = "UPDATE users_positions SET user_id = ? WHERE position_id=?;";
         try (Connection connection = connectionManager.getConnection();
-            PreparedStatement updatePosition = connection.prepareStatement(UPDATE_POSITION);
-            PreparedStatement updateUsersAndPosition = connection.prepareStatement(UPDATE_USERS_AND_POSITIONS)) {
+             PreparedStatement updatePosition = connection.prepareStatement(update);
+             PreparedStatement updateUsersAndPosition = connection.prepareStatement(updateUsersAndPositions)) {
             connection.setAutoCommit(false);
             updatePosition.setString(1, position.getName());
-
             updatePosition.setLong(2, position.getId());
             updatePosition.executeUpdate();
             if (!position.getUsers().isEmpty()) {
@@ -166,7 +165,6 @@ public class PositionRepositoryImpl implements PositionRepository {
                     updateUsersAndPosition.setLong(1, user.getId());
                     updateUsersAndPosition.setLong(2, position.getId());
                     updateUsersAndPosition.executeUpdate();
-
                 }
             }
             connection.commit();
@@ -178,13 +176,13 @@ public class PositionRepositoryImpl implements PositionRepository {
     @Override
     public boolean existById(Long id) {
         boolean isExists = false;
-        String EXIST_POSITION_BY_ID = """
+        String existPositionById = """
                     SELECT exists (
                     SELECT 1 FROM positions
                     WHERE position_id = ?);
                 """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(EXIST_POSITION_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(existPositionById)) {
 
             preparedStatement.setLong(1, id);
 

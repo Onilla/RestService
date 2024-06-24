@@ -17,6 +17,7 @@ public class UserDtoMapperImpl implements UserDtoMapper {
 
     private final Repository<Position, Long> positionRepository = new PositionRepositoryImpl();
     private final Repository<Company, Long> companyRepository = new CompanyRepositoryImpl();
+
     @Override
     public User map(UserIncomingDto userIncomingDto) {
         List<Optional<Position>> listPositions = userIncomingDto.getPositions()
@@ -24,7 +25,7 @@ public class UserDtoMapperImpl implements UserDtoMapper {
                 .map(positionRepository::findById)
                 .toList();
         List<Position> positions = new ArrayList<>();
-        for (Optional<Position> p:listPositions){
+        for (Optional<Position> p : listPositions) {
             p.ifPresent(positions::add);
         }
         Company company = companyRepository.findById(userIncomingDto.getCompanyId()).orElse(null);
@@ -32,8 +33,8 @@ public class UserDtoMapperImpl implements UserDtoMapper {
                 null,
                 userIncomingDto.getFirstname(),
                 userIncomingDto.getLastname(),
-                company,positions
-                );
+                company, positions
+        );
     }
 
     @Override
@@ -44,9 +45,10 @@ public class UserDtoMapperImpl implements UserDtoMapper {
                 user.getLastname(),
                 user.getCompany().getName(),
                 user.getPositions().stream().map(Position::getName).toList()
-                );
+        );
 
     }
+
     @Override
     public User map(UserUpdateDto userUpdateDto) {
         List<Optional<Position>> list = userUpdateDto.getPositions()
@@ -54,7 +56,7 @@ public class UserDtoMapperImpl implements UserDtoMapper {
                 .map(positionRepository::findById)
                 .toList();
         List<Position> positions = new ArrayList<>();
-        for (Optional<Position> p:list){
+        for (Optional<Position> p : list) {
             p.ifPresent(positions::add);
         }
         Company company = companyRepository.findById(userUpdateDto.getCompanyId()).orElse(null);
@@ -62,11 +64,12 @@ public class UserDtoMapperImpl implements UserDtoMapper {
                 userUpdateDto.getId(),
                 userUpdateDto.getFirstname(),
                 userUpdateDto.getLastname(),
-                company,positions
+                company, positions
         );
     }
+
     @Override
-    public List<UserOutGoingDto> map(List<User> userList){
+    public List<UserOutGoingDto> map(List<User> userList) {
         List<UserOutGoingDto> userOutGoingDtoList = new ArrayList<>();
         for (User user : userList) {
             userOutGoingDtoList.add(map(user));

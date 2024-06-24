@@ -24,4 +24,16 @@ public class PositionOutGoingDto {
     public List<String> getUserList() {
         return userList;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUserList(List<String> userList) {
+        this.userList = userList;
+    }
 }
