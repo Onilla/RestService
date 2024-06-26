@@ -4,15 +4,33 @@ import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.repository.impl.UserRepositoryImpl;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Testcontainers
 class UserRepositoryTest {
 
     private final Repository<User, Long> userRepository = new UserRepositoryImpl();
+
+    @Container
+    private static final PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+    @BeforeAll
+    static void beforeAll() {
+        postgres.start();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        postgres.stop();
+    }
 
     @Test
     void save() {
@@ -42,7 +60,7 @@ class UserRepositoryTest {
 
     @Test
     void updateCompany() {
-        String nameForUpdate = "Валентин";
+        String nameForUpdate = "Валентинов";
         User userForUpdate = userRepository.findById(22L).get();
         String nameBeforeUpdate = userForUpdate.getLastname();
         userForUpdate.setLastname(nameForUpdate);

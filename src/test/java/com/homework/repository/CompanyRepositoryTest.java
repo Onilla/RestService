@@ -2,13 +2,30 @@ package com.homework.repository;
 
 import com.homework.entity.Company;
 import com.homework.repository.impl.CompanyRepositoryImpl;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-
+@Testcontainers
 class CompanyRepositoryTest {
 
     private final Repository<Company, Long> companyRepository = new CompanyRepositoryImpl();
+    @Container
+    private static final PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+    @BeforeAll
+    static void beforeAll() {
+        postgres.start();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        postgres.stop();
+    }
 
     @Test
     void saveCompany() {
@@ -38,7 +55,7 @@ class CompanyRepositoryTest {
 
     @Test
     void updateCompany() {
-        String nameForUpdate = "AstonDev";
+        String nameForUpdate = "Aston_Dev";
         Company companyForUpdate = companyRepository.findById(51L).get();
         String nameBeforeUpdate = companyForUpdate.getName();
         companyForUpdate.setName(nameForUpdate);

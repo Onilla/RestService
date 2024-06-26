@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 )
 class CompanyServiceTest {
     @Mock
-    private static CompanyRepositoryImpl mockRepository;
+    private CompanyRepositoryImpl mockRepository;
 
     @InjectMocks
     private CompanyServiceImpl service;
