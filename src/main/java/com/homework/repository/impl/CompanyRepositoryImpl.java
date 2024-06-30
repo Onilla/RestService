@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class CompanyRepositoryImpl implements Repository<Company, Long> {
 
-    private final ConnectionManager connectionManager = new ConnectionManagerImpl();
+    ConnectionManager connectionManager = new ConnectionManagerImpl();
 
     private Company createCompany(ResultSet resultSet) throws SQLException {
         String findUsersByCompanyId = """

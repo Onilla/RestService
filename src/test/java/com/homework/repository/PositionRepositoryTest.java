@@ -1,22 +1,23 @@
 package com.homework.repository;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.repository.impl.PositionRepositoryImpl;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import com.homework.util.CreateSchemaSql;
+import org.junit.jupiter.api.*;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import java.util.ArrayList;
 import java.util.List;
+
 @Testcontainers
 class PositionRepositoryTest {
 
     private final Repository<Position, Long> positionRepository = new PositionRepositoryImpl();
+    static ConnectionManager connectionManager = new ConnectionManagerImpl();
 
     @Container
     private static final PostgreSQLContainer<?> postgres = TestUtil.testUtil();
@@ -31,12 +32,15 @@ class PositionRepositoryTest {
         postgres.stop();
     }
 
+    @BeforeEach
+    void setUp() {
+        CreateSchemaSql.createSqlScheme(connectionManager);
+    }
+
     @Test
     void save() {
-        Long id = null;
-        String positionName = "Java Developer";
         List<User> users = new ArrayList<>();
-        Position position = new Position(id, positionName, users);
+        Position position = new Position(null, "Java Developer", users);
         Position savedPosition = positionRepository.save(position);
         Assertions.assertNotNull(savedPosition.getId());
         positionRepository.deleteById(savedPosition.getId());
@@ -44,10 +48,8 @@ class PositionRepositoryTest {
 
     @Test
     void delete() {
-        Long id = null;
-        String positionName = "Developer";
         List<User> usersList = new ArrayList<>();
-        Position position = new Position(id, positionName, usersList);
+        Position position = new Position(null, "Developer", usersList);
         Position savedPosition = positionRepository.save(position);
         boolean deleteResult = positionRepository.deleteById(savedPosition.getId());
         Assertions.assertTrue(deleteResult);
@@ -55,32 +57,32 @@ class PositionRepositoryTest {
 
     @Test
     void existById() {
-        boolean existResult = positionRepository.existById(14L);
+        boolean existResult = positionRepository.existById(4L);
         Assertions.assertTrue(existResult);
     }
 
     @Test
-    void updateCompany() {
+    void update() {
         String nameForUpdate = "Developer";
-        Position positionForUpdate = positionRepository.findById(27L).get();
+        Position positionForUpdate = positionRepository.findById(1L).get();
         String nameBeforeUpdate = positionForUpdate.getName();
         positionForUpdate.setName(nameForUpdate);
         positionRepository.update(positionForUpdate);
-        Position positionAfterUpdate = positionRepository.findById(27L).get();
+        Position positionAfterUpdate = positionRepository.findById(1L).get();
         Assertions.assertNotEquals(nameForUpdate, nameBeforeUpdate);
         Assertions.assertEquals(nameForUpdate, positionAfterUpdate.getName());
     }
 
     @Test
     void findById() {
-        long id = 14L;
+        long id = 4L;
         Position position = positionRepository.findById(id).get();
         Assertions.assertNotNull(position);
     }
 
     @Test
-    void findAllPositions() {
-        int expectedSize = 6;
+    void findAll() {
+        int expectedSize = 4;
         int resultSize = positionRepository.findAll().size();
         Assertions.assertEquals(expectedSize, resultSize);
     }
