@@ -1,11 +1,8 @@
 package com.homework.repository;
 
-import com.homework.connection.ConnectionManager;
-import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.repository.impl.PositionRepositoryImpl;
-import com.homework.util.CreateSchemaSql;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -16,11 +13,10 @@ import java.util.List;
 @Testcontainers
 class PositionRepositoryTest {
 
-    private final Repository<Position, Long> positionRepository = new PositionRepositoryImpl();
-    static ConnectionManager connectionManager = new ConnectionManagerImpl();
+    Repository<Position, Long> positionRepository = new PositionRepositoryImpl();
 
     @Container
-    private static final PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+    static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
 
     @BeforeAll
     static void beforeAll() {
@@ -30,11 +26,6 @@ class PositionRepositoryTest {
     @AfterAll
     static void afterAll() {
         postgres.stop();
-    }
-
-    @BeforeEach
-    void setUp() {
-        CreateSchemaSql.createSqlScheme(connectionManager);
     }
 
     @Test
