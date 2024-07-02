@@ -1,12 +1,9 @@
 package com.homework.repository;
 
-import com.homework.connection.ConnectionManager;
-import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.repository.impl.UserRepositoryImpl;
-import com.homework.util.CreateSchemaSql;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -17,21 +14,14 @@ import java.util.List;
 @Testcontainers
 class UserRepositoryTest {
 
-    private final Repository<User, Long> userRepository = new UserRepositoryImpl();
-    static ConnectionManager connectionManager = new ConnectionManagerImpl();
-
+    Repository<User, Long> userRepository = new UserRepositoryImpl();
 
     @Container
-    private static final PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+    static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
 
     @BeforeAll
     static void beforeAll() {
         postgres.start();
-    }
-
-    @BeforeEach
-    void setUp() {
-        CreateSchemaSql.createSqlScheme(connectionManager);
     }
 
     @AfterAll
@@ -74,14 +64,14 @@ class UserRepositoryTest {
 
     @Test
     void findById() {
-        long id = 1L;
+        long id = 3L;
         User user = userRepository.findById(id).get();
         Assertions.assertNotNull(user);
     }
 
     @Test
     void findAll() {
-        int expectedSize = 4;
+        int expectedSize = 3;
         int resultSize = userRepository.findAll().size();
         Assertions.assertEquals(expectedSize, resultSize);
     }

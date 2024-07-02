@@ -1,10 +1,7 @@
 package com.homework.repository;
 
-import com.homework.connection.ConnectionManager;
-import com.homework.connection.ConnectionManagerImpl;
 import com.homework.entity.Company;
 import com.homework.repository.impl.CompanyRepositoryImpl;
-import com.homework.util.CreateSchemaSql;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -14,7 +11,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 class CompanyRepositoryTest {
 
     Repository<Company, Long> companyRepository = new CompanyRepositoryImpl();
-    static ConnectionManager connectionManager = new ConnectionManagerImpl();
+
     @Container
     static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
 
@@ -28,9 +25,18 @@ class CompanyRepositoryTest {
         postgres.stop();
     }
 
-    @BeforeEach
-    void setUp() {
-        CreateSchemaSql.createSqlScheme(connectionManager);
+    @Test
+    void findById() {
+        long id = 1L;
+        Company company = companyRepository.findById(id).get();
+        Assertions.assertNotNull(company);
+    }
+
+    @Test
+    void findAll() {
+        int expectedSize = 3;
+        int resultSize = companyRepository.findAll().size();
+        Assertions.assertEquals(expectedSize, resultSize);
     }
 
     @Test
@@ -64,20 +70,6 @@ class CompanyRepositoryTest {
         Company companyAfterUpdate = companyRepository.findById(1L).get();
         Assertions.assertNotEquals(nameForUpdate, nameBeforeUpdate);
         Assertions.assertEquals(nameForUpdate, companyAfterUpdate.getName());
-    }
-
-    @Test
-    void findById() {
-        long id = 1L;
-        Company company = companyRepository.findById(id).get();
-        Assertions.assertNotNull(company);
-    }
-
-    @Test
-    void findAll() {
-        int expectedSize = 3;
-        int resultSize = companyRepository.findAll().size();
-        Assertions.assertEquals(expectedSize, resultSize);
     }
 
 }

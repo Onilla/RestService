@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="RestService" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4abea9a7-5a01-47df-8072-e2f0c8337d33" name="Changes" comment="добавлена зависимость">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/RestService.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/2/021cc63017c6c756eaf23a01eceaed97b900bfb4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/d/0d4017b0f1cef9817e045063874634b8edabbc08" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/2/12a779010086676995442ce298aada6a878dc70c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/4/14b7ece39958c21f90d6e2a0741994c434ab3ae1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/0/2005999e23b9064b1f46be17ff186c4ce245f1de" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/0/2023c6d2f91f192c96a716aaa3e9026b322ef95a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/1/21581d19e3f6680c7be01a28ec804d6a011b9232" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/2/229f0a35f23d34039f272b291cfef2916f9f3dcd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/7/574d77fcd6746aede01d4d5fb63094da05459924" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/b/5bb29b18cf336ae6e15c3e94b4f7863517bd3161" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/d/6d5f21efa0049d64201273383af290c21d142637" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/0/70e6a1a00cae491a1a8a6439386b295222234db1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/4/74ecbee935cdb429252ddb050967ecd05e976eae" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/9/79bb3c1c111c1a91e0c76ff68e84612665061526" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/e/7eb8b54543ba7337a60159e0cc1f6350df83272e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/f/7f70da76c5470d84c07c4d9e17804c196fc129ea" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/f/7ff2d8c1e41656e9d4177818b8c949223640286f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/1/81c5fe9ff46e045c14773b24bb57ba981f98c395" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/1/91cc9f4692090573ce3169b28d54288d206e56f6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/a/9a964be7680adcead952783bcd797f56c96c6d62" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/d/9dcb9280a63b0c5c8c0ab2b41444a24c92157b30" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/f/9f6e26c3e18cf144c25173af8e1b8672e7792c67" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/5/a5cc2925ca8258af241be7e5b0381edf30266302" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/9/a9b493c9c006e5e651f11cfd1eb3139bc132b0e5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/b/abd014c82389e75035d50ffe5dbcbfe4f3e9d50d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/c/ac4a481b8fd5a1bbc46a7a0eebc02beb3f496ebe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/0/b0f77aa17825ad58af05d08cb7b307c52d7b6415" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/1/c1c8df02bace70fa2e23af8679a043c5c127294f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/c/cc990d0b6c0f4ec537d9bc997544dee0ced86b87" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/d/cdd71c3beaa41d0351a59ad67b0dc26dd1ae7832" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/5/d5b1f5bdc74f87c75403278188d85528e5af64b4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/7/d79b0bfe95cbfce9318866a26c489873360e6734" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/b/eb54ca4d5720257a78b74002dbc250c437f2ae91" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/b/ebad00490d99c4f2794787cd107287c6534cfb5a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/0/f0696360dd8d2fb0a47f389cc217a5589a94745d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/3/f333b8603cbd1f84474d593e315629743891570b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/c/fc363e826b2a78a05386b43163677b1e11f6307a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/c/fc55d18bd944b2d912ad351c1eec499f4d081376" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/5/05984e2d5014bb17d293895c8cd32d3fd1830217" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/c/0c72533db8df16f9630d49d35b73568678ac686f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/2/122bf93789a5ef9dc16e7ea72b9ea42b14c14b9e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/5/153825f1cf2baa610e836ba6374aa7d616ab8e35" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/2/0/2005999e23b9064b1f46be17ff186c4ce245f1de" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/3/c/3c90054866d0a8adca31f3446e451f3a923379df" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/4/2/4258e6ea33241293a29d6d0399669481921710d0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/5/2/520d64d61fec3203db3cac2734c05a090c5a8ec0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/5/b/5b4bdda3f25978051d907730015b8a99b297611c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/0/70e6a1a00cae491a1a8a6439386b295222234db1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/4/74ecbee935cdb429252ddb050967ecd05e976eae" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/d/7d72b324df321d1e88c9684e114df37bf3cfa42b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/e/8ea297f7ec429b32faa3f4fe2a1742010fd57bcc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/5/95ad0513efcbb1cc7c38c106d52b10983fa54f53" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/d/9dc29dcac2cb94c028beafb86519ed1631f76cca" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/2/a268983bbfc2e7e87cbd0e7b1b076c76ffb435f6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/b/abd014c82389e75035d50ffe5dbcbfe4f3e9d50d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/e/bec31916f0500d141672ace99ce17a7bcdb38cfc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/c/1/c1c8df02bace70fa2e23af8679a043c5c127294f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/c/f/cfba828172fb7384be94f3fc3c5889272e7606fd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/1/d183e2fe2e3c9a849ce61b4fe4c8e41da446b342" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/5/d5b1f5bdc74f87c75403278188d85528e5af64b4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/e/de1726080921ca245af6766f220368bc76ee2e51" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/e/debec6e40476f557c64c0fc1c0f9394b079148fc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/b/ebad00490d99c4f2794787cd107287c6534cfb5a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/3/f333b8603cbd1f84474d593e315629743891570b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/c/fc363e826b2a78a05386b43163677b1e11f6307a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/d/fdee08cc5800180965ef121f80aa25bc27aff7f2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/homework/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/homework/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/homework/repository/UserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/homework/repository/UserRepositoryTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="AnnotationType" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectId" id="2h8hD47weHG5a8Vaw5cuVEOKFRx" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.21149425" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.homework.repository" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.homework.servlet" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.homework.repository.impl" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn compile" />
+      <command value="mvn clean" />
+      <command value="mvn install" />
+      <command value="mvn package" />
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.UserRepositoryTest">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.homework.Main" />
+      <module name="RestService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.homework.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CompanyRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="RestService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.homework.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.homework.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.homework.repository.CompanyRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PositionRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="RestService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.homework.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.homework.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.homework.repository.PositionRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="RestService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.homework.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.homework.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.homework.repository.UserRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserRepositoryTest.findById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="RestService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.homework.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.homework.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.homework.repository.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="findById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tomcat 10.1.20" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.20" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="RestService">
+          <settings>
+            <option name="CONTEXT_PATH" value="/RestService_war_exploded" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="d9a69754-5bc4-445a-b041-15f3dc759613" />
+        <option name="DEPLOY_TOMCAT_APPS" value="true" />
+        <option name="HTTP_PORT" value="8081" />
+      </server-settings>
+      <log_file alias="Tomcat Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/manager.*" />
+      <log_file alias="Tomcat Host Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/host-manager.*" />
+      <log_file alias="Tomcat Localhost Access Log" path="%IDEA_RUN:CATALINA_BASE%/logs/localhost_access_log.*" />
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="38223" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="RestService" />
+        </option>
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.CompanyRepositoryTest" />
+      <item itemvalue="JUnit.PositionRepositoryTest" />
+      <item itemvalue="JUnit.UserRepositoryTest" />
+      <item itemvalue="JUnit.UserRepositoryTest.findById" />
+      <item itemvalue="Tomcat Server.Tomcat 10.1.20" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.UserRepositoryTest" />
+        <item itemvalue="JUnit.UserRepositoryTest.findById" />
+        <item itemvalue="JUnit.PositionRepositoryTest" />
+        <item itemvalue="JUnit.CompanyRepositoryTest" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4abea9a7-5a01-47df-8072-e2f0c8337d33" name="Changes" comment="" />
+      <created>1716981490381</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716981490381</updated>
+      <workItem from="1716981491418" duration="2892000" />
+      <workItem from="1716986192125" duration="4824000" />
+      <workItem from="1717003180782" duration="3506000" />
+      <workItem from="1717007397254" duration="1198000" />
+      <workItem from="1717011720535" duration="675000" />
+      <workItem from="1717054600973" duration="2447000" />
+      <workItem from="1717064559131" duration="13226000" />
+      <workItem from="1717404472633" duration="2988000" />
+      <workItem from="1717409466555" duration="11216000" />
+      <workItem from="1717424469455" duration="2867000" />
+      <workItem from="1717440058542" duration="54000" />
+      <workItem from="1717518186877" duration="87000" />
+      <workItem from="1717662510907" duration="266000" />
+      <workItem from="1717663351007" duration="26000" />
+      <workItem from="1717663411184" duration="5000" />
+      <workItem from="1717663794081" duration="11000" />
+      <workItem from="1717664597037" duration="5000" />
+      <workItem from="1717665453177" duration="154000" />
+      <workItem from="1717674977876" duration="2550000" />
+      <workItem from="1717679276354" duration="1529000" />
+      <workItem from="1717681143495" duration="3849000" />
+      <workItem from="1717746252142" duration="36353000" />
+      <workItem from="1717838016191" duration="8939000" />
+      <workItem from="1717951736650" duration="10111000" />
+      <workItem from="1718008908846" duration="16274000" />
+      <workItem from="1718033452864" duration="4764000" />
+      <workItem from="1718045119895" duration="4878000" />
+      <workItem from="1718093106722" duration="4529000" />
+      <workItem from="1718098464012" duration="6000" />
+      <workItem from="1718101594732" duration="1386000" />
+      <workItem from="1718110653589" duration="11069000" />
+      <workItem from="1718130754113" duration="6486000" />
+      <workItem from="1718180372056" duration="2473000" />
+      <workItem from="1718191296730" duration="27913000" />
+      <workItem from="1718225096910" duration="77000" />
+      <workItem from="1718267772108" duration="18865000" />
+      <workItem from="1718290247416" duration="3955000" />
+      <workItem from="1718303298985" duration="4744000" />
+      <workItem from="1718308925869" duration="183000" />
+      <workItem from="1718309576335" duration="1257000" />
+      <workItem from="1718354852011" duration="713000" />
+      <workItem from="1718360083277" duration="31205000" />
+      <workItem from="1718475601982" duration="2231000" />
+      <workItem from="1718541789098" duration="26195000" />
+      <workItem from="1718612893512" duration="8688000" />
+      <workItem from="1718633755456" duration="15177000" />
+      <workItem from="1718711602618" duration="1636000" />
+      <workItem from="1718957972327" duration="1844000" />
+      <workItem from="1718959842139" duration="20776000" />
+      <workItem from="1718992558734" duration="3536000" />
+      <workItem from="1719000647579" duration="2908000" />
+      <workItem from="1719069137613" duration="3260000" />
+      <workItem from="1719149050629" duration="6555000" />
+      <workItem from="1719163816803" duration="3018000" />
+      <workItem from="1719225974428" duration="6160000" />
+      <workItem from="1719243882483" duration="1659000" />
+      <workItem from="1719313990511" duration="2527000" />
+      <workItem from="1719319875916" duration="548000" />
+      <workItem from="1719320446872" duration="589000" />
+      <workItem from="1719325137459" duration="4060000" />
+      <workItem from="1719389197637" duration="1046000" />
+      <workItem from="1719391696695" duration="2173000" />
+      <workItem from="1719395565550" duration="6992000" />
+      <workItem from="1719405740030" duration="8187000" />
+      <workItem from="1719473730429" duration="6150000" />
+      <workItem from="1719501306316" duration="917000" />
+      <workItem from="1719572243625" duration="10299000" />
+      <workItem from="1719585597152" duration="4638000" />
+      <workItem from="1719676998066" duration="1367000" />
+      <workItem from="1719740451930" duration="10174000" />
+      <workItem from="1719762237369" duration="4209000" />
+      <workItem from="1719822355484" duration="6665000" />
+      <workItem from="1719840983071" duration="656000" />
+      <workItem from="1719856696508" duration="1792000" />
+      <workItem from="1719861930200" duration="4101000" />
+      <workItem from="1719905904913" duration="7480000" />
+      <workItem from="1719922740482" duration="145000" />
+      <workItem from="1719937077192" duration="1505000" />
+      <workItem from="1719940578481" duration="1414000" />
+      <workItem from="1719942017572" duration="472000" />
+      <workItem from="1720029724155" duration="677000" />
+      <workItem from="1720035847324" duration="520000" />
+    </task>
+    <task id="LOCAL-00001" summary="1">
+      <created>1718199185775</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1718199185775</updated>
+    </task>
+    <task id="LOCAL-00002" summary="2">
+      <created>1718225138102</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1718225138102</updated>
+    </task>
+    <task id="LOCAL-00003" summary="3">
+      <created>1718277836037</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1718277836037</updated>
+    </task>
+    <task id="LOCAL-00004" summary="4">
+      <created>1718293645214</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1718293645214</updated>
+    </task>
+    <task id="LOCAL-00005" summary="5">
+      <created>1718310080040</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1718310080040</updated>
+    </task>
+    <task id="LOCAL-00006" summary="6">
+      <created>1718397876075</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1718397876075</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Добавлены тесты">
+      <created>1719232086438</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1719232086438</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Исправлены тесты репозитория">
+      <created>1719403527058</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1719403527058</updated>
+    </task>
+    <task id="LOCAL-00009" summary="исправлены тесты">
+      <created>1719765565188</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1719765565188</updated>
+    </task>
+    <task id="LOCAL-00010" summary="добавлена зависимость">
+      <created>1719912143997</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1719912143998</updated>
+    </task>
+    <task id="LOCAL-00011" summary="добавлена зависимость">
+      <created>1720030631129</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1720030631129</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/rest" />
+    </ignored-roots>
+    <MESSAGE value="2" />
+    <MESSAGE value="3" />
+    <MESSAGE value="4" />
+    <MESSAGE value="5" />
+    <MESSAGE value="6" />
+    <MESSAGE value="Добавлены тесты" />
+    <MESSAGE value="Исправлены тесты репозитория" />
+    <MESSAGE value="исправлены тесты" />
+    <MESSAGE value="1" />
+    <MESSAGE value="добавлена зависимость" />
+    <option name="LAST_COMMIT_MESSAGE" value="добавлена зависимость" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+        <watch expression="e" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
