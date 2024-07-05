@@ -1,8 +1,6 @@
 package com.homework.repository.impl;
 
 import com.homework.connection.ConnectionManager;
-import com.homework.connection.ConnectionManagerImpl;
-import com.homework.connection.ContainerConnectionManager;
 import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
@@ -17,30 +15,69 @@ import java.util.Optional;
 
 public class UserRepositoryImpl implements Repository<User, Long> {
 
+    public static final String FIND_ALL_POSITIONS_BY_USER_ID = """
+            SELECT p.position_id, position_name FROM positions AS p
+            INNER JOIN users_positions AS up ON p.position_id = up.position_id
+            INNER JOIN users AS u ON u.user_id = up.user_id
+            WHERE u.user_id = ?;
+            """;
+    public static final String FIND_COMPANY_BY_COMPANY_ID = """
+            SELECT company_id, company_name FROM companies
+            WHERE company_id = ?;
+            """;
+    public static final String FIND_USER_BY_ID = """
+            SELECT user_id, user_firstname, user_lastname, company_id FROM users
+            WHERE user_id = ?;
+            """;
+    public static final String FIND_ALL_USERS = """
+            SELECT user_id, user_firstname, user_lastname, company_id FROM users ;
+            """;
+    public static final String SAVE = """
+            INSERT INTO users (user_firstname, user_lastname, company_id)
+            VALUES (?, ? ,?) ;
+            """;
+    public static final String SAVE_USERS_POSITIONS =
+            "INSERT INTO users_positions (user_id, position_id) VALUES (?, ?)";
+    public static final String UPDATE = """
+            UPDATE users
+            SET user_firstname = ?, user_lastname = ?, company_id = ?
+            WHERE user_id = ?  ;
+            """;
+    public static final String UPDATE_USERS_POSITIONS = """ 
+            UPDATE users_positions
+             SET position_id = ?
+             WHERE user_id=?;
+            """;
+    public static final String DELETE_USER_BY_ID = """
+            DELETE FROM users
+            WHERE user_id = ? ;
+            """;
+    public static final String DELETE_USER_POSITIONS_BY_ID = """
+            DELETE FROM users_positions
+            WHERE user_id = ? ;
+            """;
+
+    public static final String EXIST_USER_BY_ID = """
+                SELECT exists (
+                SELECT 1 FROM users
+                WHERE user_id = ?);
+            """;
+
+
     private ConnectionManager connectionManager;
 
     public UserRepositoryImpl() {
         this.connectionManager = Fabric.getConnectionManager();
     }
 
-    public UserRepositoryImpl(ConnectionManager connectionManager){
+    public UserRepositoryImpl(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
     private User createUser(ResultSet resultSet) throws SQLException {
-        String findAllPositionsByUserId = """
-                SELECT p.position_id, position_name FROM positions AS p
-                INNER JOIN users_positions AS up ON p.position_id = up.position_id
-                INNER JOIN users AS u ON u.user_id = up.user_id
-                WHERE u.user_id = ?;
-                """;
-        String findCompanyByCompanyId = """
-                SELECT company_id, company_name FROM companies
-                WHERE company_id = ?;
-                """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement findPositions = connection.prepareStatement(findAllPositionsByUserId);
-             PreparedStatement findCompany = connection.prepareStatement(findCompanyByCompanyId)) {
+             PreparedStatement findPositions = connection.prepareStatement(FIND_ALL_POSITIONS_BY_USER_ID);
+             PreparedStatement findCompany = connection.prepareStatement(FIND_COMPANY_BY_COMPANY_ID)) {
             long companyId = resultSet.getLong("company_id");
             Company company = new Company();
             findCompany.setLong(1, companyId);
@@ -68,13 +105,9 @@ public class UserRepositoryImpl implements Repository<User, Long> {
 
     @Override
     public Optional<User> findById(Long id) {
-        String findUserById = """
-                SELECT user_id, user_firstname, user_lastname, company_id FROM users
-                WHERE user_id = ?;
-                """;
         User user = null;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(findUserById)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -88,12 +121,9 @@ public class UserRepositoryImpl implements Repository<User, Long> {
 
     @Override
     public List<User> findAll() {
-        String findAllUsers = """
-                SELECT user_id, user_firstname, user_lastname, company_id FROM users ;
-                """;
         List<User> usersList = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(findAllUsers)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -107,15 +137,9 @@ public class UserRepositoryImpl implements Repository<User, Long> {
 
     @Override
     public User save(User user) {
-        String save = """
-                INSERT INTO users (user_firstname, user_lastname, company_id)
-                VALUES (?, ? ,?) ;
-                """;
-        String saveUsersPositions =
-                "INSERT INTO users_positions (user_id, position_id) VALUES (?, ?)";
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement saveUser = connection.prepareStatement(save, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement saveUsersAndPositions = connection.prepareStatement(saveUsersPositions)) {
+             PreparedStatement saveUser = connection.prepareStatement(SAVE, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement saveUsersAndPositions = connection.prepareStatement(SAVE_USERS_POSITIONS)) {
             connection.setAutoCommit(false);
             saveUser.setString(1, user.getFirstname());
             saveUser.setString(2, user.getLastname());
@@ -125,7 +149,6 @@ public class UserRepositoryImpl implements Repository<User, Long> {
                 saveUser.setLong(3, user.getCompany().getId());
             }
             saveUser.executeUpdate();
-
             ResultSet resultSet = saveUser.getGeneratedKeys();
             if (resultSet.next()) {
                 user.setId(resultSet.getLong(1));
@@ -146,19 +169,9 @@ public class UserRepositoryImpl implements Repository<User, Long> {
 
     @Override
     public void update(User user) {
-        String update = """
-                UPDATE users
-                SET user_firstname = ?, user_lastname = ?, company_id = ?
-                WHERE user_id = ?  ;
-                """;
-        String updateUsersPositions = """ 
-                UPDATE users_positions
-                 SET position_id = ?
-                 WHERE user_id=?;
-                """;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement updateUser = connection.prepareStatement(update);
-             PreparedStatement updateUsersAndPositions = connection.prepareStatement(updateUsersPositions)) {
+             PreparedStatement updateUser = connection.prepareStatement(UPDATE);
+             PreparedStatement updateUsersAndPositions = connection.prepareStatement(UPDATE_USERS_POSITIONS)) {
             connection.setAutoCommit(false);
             updateUser.setString(1, user.getFirstname());
             updateUser.setString(2, user.getLastname());
@@ -184,18 +197,10 @@ public class UserRepositoryImpl implements Repository<User, Long> {
 
     @Override
     public boolean deleteById(Long id) {
-        String deleteUserById = """
-                DELETE FROM users
-                WHERE user_id = ? ;
-                """;
-        String deleteUserPositionsById = """
-                DELETE FROM users_positions
-                WHERE user_id = ? ;
-                """;
         boolean deleteResult;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement deleteUsersPositions = connection.prepareStatement(deleteUserPositionsById);
-             PreparedStatement deleteUser = connection.prepareStatement(deleteUserById)) {
+             PreparedStatement deleteUsersPositions = connection.prepareStatement(DELETE_USER_POSITIONS_BY_ID);
+             PreparedStatement deleteUser = connection.prepareStatement(DELETE_USER_BY_ID)) {
             connection.setAutoCommit(false);
             deleteUsersPositions.setLong(1, id);
             deleteUsersPositions.executeUpdate();
@@ -210,14 +215,9 @@ public class UserRepositoryImpl implements Repository<User, Long> {
 
     @Override
     public boolean existById(Long id) {
-        String existUserById = """
-                    SELECT exists (
-                    SELECT 1 FROM users
-                    WHERE user_id = ?);
-                """;
         boolean isExists = false;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement existUser = connection.prepareStatement(existUserById)) {
+             PreparedStatement existUser = connection.prepareStatement(EXIST_USER_BY_ID)) {
             existUser.setLong(1, id);
             ResultSet resultSet = existUser.executeQuery();
             if (resultSet.next()) {
