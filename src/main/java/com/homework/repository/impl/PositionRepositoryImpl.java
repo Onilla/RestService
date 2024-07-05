@@ -2,9 +2,11 @@ package com.homework.repository.impl;
 
 import com.homework.connection.ConnectionManager;
 import com.homework.connection.ConnectionManagerImpl;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.exception.DBException;
+import com.homework.fabric.Fabric;
 import com.homework.repository.Repository;
 
 import java.sql.*;
@@ -14,7 +16,15 @@ import java.util.Optional;
 
 public class PositionRepositoryImpl implements Repository<Position, Long> {
 
-    private final ConnectionManager connectionManager = new ConnectionManagerImpl();
+    private ConnectionManager connectionManager;
+
+    public PositionRepositoryImpl(){
+        this.connectionManager = Fabric.getConnectionManager();
+    }
+
+    public PositionRepositoryImpl(ConnectionManager connectionManager){
+        this.connectionManager = connectionManager;}
+
 
     @Override
     public Optional<Position> findById(Long id) {

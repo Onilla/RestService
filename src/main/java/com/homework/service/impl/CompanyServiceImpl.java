@@ -7,6 +7,7 @@ import com.homework.dto.mappers.CompanyDtoMapper;
 import com.homework.dto.mappers.impl.CompanyDtoMapperImpl;
 import com.homework.entity.Company;
 import com.homework.exception.NotFoundException;
+import com.homework.fabric.Fabric;
 import com.homework.repository.impl.CompanyRepositoryImpl;
 import com.homework.service.CompanyService;
 
@@ -14,8 +15,13 @@ import java.util.List;
 
 public class CompanyServiceImpl implements CompanyService {
 
-    private CompanyRepositoryImpl companyRepository = new CompanyRepositoryImpl();
-    private final CompanyDtoMapper dtoMapper = new CompanyDtoMapperImpl();
+    private CompanyRepositoryImpl companyRepository;
+    private CompanyDtoMapper dtoMapper;
+
+    public CompanyServiceImpl(){
+        this.companyRepository = Fabric.getCompanyRepository();
+        this.dtoMapper = Fabric.getDtoMapper();
+    }
 
     @Override
     public CompanyOutGoingDto save(CompanyIncomingDto companyIncomingDto) {

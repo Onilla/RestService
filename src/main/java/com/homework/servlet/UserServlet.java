@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homework.dto.*;
 import com.homework.exception.NotFoundException;
+import com.homework.fabric.Fabric;
 import com.homework.service.UserService;
 import com.homework.service.impl.UserServiceImpl;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,8 +20,13 @@ import java.util.List;
 @WebServlet(name = "UserServlet", value = "/user/*")
 public class UserServlet extends HttpServlet {
 
-    private transient UserService userService = new UserServiceImpl();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private transient UserService userService;
+    private ObjectMapper objectMapper;
+
+    public UserServlet(){
+        this.userService = Fabric.getUserService();
+        this.objectMapper = Fabric.getObjectMapper();
+    }
 
     public static void setJson(HttpServletResponse resp) {
         resp.setContentType("application/json");

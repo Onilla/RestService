@@ -7,6 +7,7 @@ import com.homework.dto.mappers.PositionDtoMapper;
 import com.homework.dto.mappers.impl.PositionDtoMapperImpl;
 import com.homework.entity.Position;
 import com.homework.exception.NotFoundException;
+import com.homework.fabric.Fabric;
 import com.homework.repository.impl.PositionRepositoryImpl;
 import com.homework.service.PositionService;
 
@@ -14,8 +15,13 @@ import java.util.List;
 
 public class PositionServiceImpl implements PositionService {
 
-    private PositionRepositoryImpl positionRepository = new PositionRepositoryImpl();
-    private final PositionDtoMapper dtoMapper = new PositionDtoMapperImpl();
+    private PositionRepositoryImpl positionRepository;
+    private PositionDtoMapper dtoMapper;
+
+    public PositionServiceImpl(){
+        this.positionRepository = Fabric.getPositionRepository();
+        this.dtoMapper = Fabric.getPositionDtoMapper();
+    }
 
     @Override
     public PositionOutGoingDto save(PositionIncomingDto positionIncomingDto) {

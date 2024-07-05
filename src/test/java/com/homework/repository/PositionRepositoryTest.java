@@ -1,7 +1,10 @@
 package com.homework.repository;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.entity.Position;
 import com.homework.entity.User;
+import com.homework.repository.impl.CompanyRepositoryImpl;
 import com.homework.repository.impl.PositionRepositoryImpl;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -13,10 +16,14 @@ import java.util.List;
 @Testcontainers
 class PositionRepositoryTest {
 
-    Repository<Position, Long> positionRepository = new PositionRepositoryImpl();
-
     @Container
     static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(),postgres.getPassword());
+
+    private final PositionRepositoryImpl positionRepository = new PositionRepositoryImpl(connectionManager);
 
     @BeforeAll
     static void beforeAll() {

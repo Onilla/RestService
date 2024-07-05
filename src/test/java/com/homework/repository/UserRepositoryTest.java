@@ -1,5 +1,7 @@
 package com.homework.repository;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
@@ -14,10 +16,12 @@ import java.util.List;
 @Testcontainers
 class UserRepositoryTest {
 
-    Repository<User, Long> userRepository = new UserRepositoryImpl();
-
     @Container
     static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(),postgres.getPassword());
+
+    private final UserRepositoryImpl userRepository = new UserRepositoryImpl(connectionManager);
 
     @BeforeAll
     static void beforeAll() {

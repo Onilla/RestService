@@ -6,6 +6,7 @@ import com.homework.dto.CompanyIncomingDto;
 import com.homework.dto.CompanyOutGoingDto;
 import com.homework.dto.CompanyUpdateDto;
 import com.homework.exception.NotFoundException;
+import com.homework.fabric.Fabric;
 import com.homework.service.CompanyService;
 import com.homework.service.impl.CompanyServiceImpl;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,8 +21,13 @@ import java.util.Optional;
 @WebServlet(name = "CompanyServlet", value = "/company")
 public class CompanyServlet extends HttpServlet {
 
-    private transient CompanyService companyService = new CompanyServiceImpl();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private transient CompanyService companyService;
+    private ObjectMapper objectMapper;
+
+    public CompanyServlet(){
+        this.companyService = Fabric.getCompanyService();
+        this.objectMapper = Fabric.getObjectMapper();
+    }
 
     private static void setJson(HttpServletResponse resp) {
         resp.setContentType("application/json");

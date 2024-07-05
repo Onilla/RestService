@@ -1,5 +1,7 @@
 package com.homework.repository;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.entity.Company;
 import com.homework.repository.impl.CompanyRepositoryImpl;
 import org.junit.jupiter.api.*;
@@ -10,10 +12,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 class CompanyRepositoryTest {
 
-    Repository<Company, Long> companyRepository = new CompanyRepositoryImpl();
-
     @Container
     static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(),postgres.getPassword());
+
+    private final CompanyRepositoryImpl companyRepository = new CompanyRepositoryImpl(connectionManager);
 
     @BeforeAll
     static void beforeAll() {

@@ -2,10 +2,12 @@ package com.homework.repository.impl;
 
 import com.homework.connection.ConnectionManager;
 import com.homework.connection.ConnectionManagerImpl;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.exception.DBException;
+import com.homework.fabric.Fabric;
 import com.homework.repository.Repository;
 
 import java.sql.*;
@@ -15,7 +17,15 @@ import java.util.Optional;
 
 public class UserRepositoryImpl implements Repository<User, Long> {
 
-    private final ConnectionManager connectionManager = new ConnectionManagerImpl();
+    private ConnectionManager connectionManager;
+
+    public UserRepositoryImpl() {
+        this.connectionManager = Fabric.getConnectionManager();
+    }
+
+    public UserRepositoryImpl(ConnectionManager connectionManager){
+        this.connectionManager = connectionManager;
+    }
 
     private User createUser(ResultSet resultSet) throws SQLException {
         String findAllPositionsByUserId = """

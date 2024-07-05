@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homework.dto.*;
 import com.homework.exception.NotFoundException;
+import com.homework.fabric.Fabric;
 import com.homework.service.PositionService;
 import com.homework.service.impl.PositionServiceImpl;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,8 +21,13 @@ import java.util.Optional;
 @WebServlet(name = "PositionServlet", value = "/position")
 public class PositionServlet extends HttpServlet {
 
-    private transient PositionService positionService = new PositionServiceImpl();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private transient PositionService positionService;
+    private ObjectMapper objectMapper;
+
+    public PositionServlet(){
+        this.positionService = Fabric.getPositionService();
+        this.objectMapper = Fabric.getObjectMapper();
+    }
 
     private static void setJson(HttpServletResponse resp) {
         resp.setContentType("application/json");

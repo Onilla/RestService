@@ -5,6 +5,7 @@ import com.homework.dto.mappers.UserDtoMapper;
 import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
+import com.homework.fabric.Fabric;
 import com.homework.repository.Repository;
 import com.homework.repository.impl.CompanyRepositoryImpl;
 import com.homework.repository.impl.PositionRepositoryImpl;
@@ -15,8 +16,13 @@ import java.util.Optional;
 
 public class UserDtoMapperImpl implements UserDtoMapper {
 
-    private final Repository<Position, Long> positionRepository = new PositionRepositoryImpl();
-    private final Repository<Company, Long> companyRepository = new CompanyRepositoryImpl();
+    private final Repository<Position, Long> positionRepository;
+    private final Repository<Company, Long> companyRepository;
+
+    public UserDtoMapperImpl(){
+        this.positionRepository = Fabric.getPositionRepository();
+        this.companyRepository = Fabric.getCompanyRepository();
+    }
 
     @Override
     public User map(UserIncomingDto userIncomingDto) {

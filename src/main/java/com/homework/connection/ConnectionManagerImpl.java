@@ -7,6 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionManagerImpl implements ConnectionManager{
+    public static final String URL = "db.url";
+    public static final String DRAIVER = "db.driver";
+    public static final String USERNAME = "db.username";
+    public static final String PASSWORD = "db.password";
+
     public void loadDriver(String driverClass) {
         try {
             Class.forName(driverClass);
@@ -16,11 +21,11 @@ public class ConnectionManagerImpl implements ConnectionManager{
     }
     @Override
     public Connection getConnection() throws SQLException {
-        loadDriver(InitProperties.getProperties("db.driver"));
+        loadDriver(InitProperties.getProperties(DRAIVER));
         return DriverManager.getConnection(
-                InitProperties.getProperties("db.url"),
-                InitProperties.getProperties("db.username"),
-                InitProperties.getProperties("db.password")
+                InitProperties.getProperties(URL),
+                InitProperties.getProperties(USERNAME),
+                InitProperties.getProperties(PASSWORD)
         );
     }
 }

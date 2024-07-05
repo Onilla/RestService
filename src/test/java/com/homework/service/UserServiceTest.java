@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(
         MockitoExtension.class
 )
+
 class UserServiceTest {
     @Mock
     private UserRepositoryImpl mockRepository;

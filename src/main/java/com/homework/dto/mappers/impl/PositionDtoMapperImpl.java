@@ -6,6 +6,7 @@ import com.homework.dto.PositionUpdateDto;
 import com.homework.dto.mappers.PositionDtoMapper;
 import com.homework.entity.Position;
 import com.homework.entity.User;
+import com.homework.fabric.Fabric;
 import com.homework.repository.Repository;
 import com.homework.repository.impl.UserRepositoryImpl;
 
@@ -15,7 +16,11 @@ import java.util.Optional;
 
 
 public class PositionDtoMapperImpl implements PositionDtoMapper {
-    Repository<User, Long> userRepository = new UserRepositoryImpl();
+    Repository<User, Long> userRepository;
+
+    public PositionDtoMapperImpl(){
+        this.userRepository = Fabric.getUserRepository();
+    }
 
     @Override
     public List<User> createUsersList(PositionIncomingDto positionIncomingDto) {

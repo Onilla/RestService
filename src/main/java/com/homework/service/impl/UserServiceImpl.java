@@ -7,6 +7,7 @@ import com.homework.dto.mappers.UserDtoMapper;
 import com.homework.dto.mappers.impl.UserDtoMapperImpl;
 import com.homework.entity.User;
 import com.homework.exception.NotFoundException;
+import com.homework.fabric.Fabric;
 import com.homework.repository.impl.UserRepositoryImpl;
 import com.homework.service.UserService;
 
@@ -14,8 +15,13 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private UserRepositoryImpl userRepository = new UserRepositoryImpl();
-    private final UserDtoMapper dtoMapper = new UserDtoMapperImpl();
+    private UserRepositoryImpl userRepository;
+    private UserDtoMapper dtoMapper;
+
+    public UserServiceImpl(){
+        this. userRepository = Fabric.getUserRepository();
+        this.dtoMapper = Fabric.getUserDtoMapper();
+    }
 
     @Override
     public UserOutGoingDto save(UserIncomingDto userIncomingDto) {
