@@ -36,6 +36,10 @@ public class User {
         this.lastname = lastname;
     }
 
+    public User(){
+
+    }
+
     public Long getId() {
         return id;
     }
