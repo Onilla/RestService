@@ -19,9 +19,9 @@ public class UserDtoMapperImpl implements UserDtoMapper {
     private final Repository<Position, Long> positionRepository;
     private final Repository<Company, Long> companyRepository;
 
-    public UserDtoMapperImpl(){
-        this.positionRepository = Fabric.getPositionRepository();
-        this.companyRepository = Fabric.getCompanyRepository();
+    public UserDtoMapperImpl(CompanyRepositoryImpl companyRepository, PositionRepositoryImpl positionRepository){
+        this.positionRepository = positionRepository;
+        this.companyRepository = companyRepository;
     }
 
     @Override

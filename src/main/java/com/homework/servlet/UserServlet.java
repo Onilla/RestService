@@ -23,8 +23,8 @@ public class UserServlet extends HttpServlet {
     private transient UserService userService;
     private ObjectMapper objectMapper;
 
-    public UserServlet(){
-        this.userService = Fabric.getUserService();
+    public UserServlet(UserServiceImpl userService){
+        this.userService = userService;
         this.objectMapper = Fabric.getObjectMapper();
     }
 

@@ -1,20 +1,35 @@
 package com.homework.mappers;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.dto.UserIncomingDto;
 import com.homework.dto.UserOutGoingDto;
 import com.homework.dto.UserUpdateDto;
 import com.homework.dto.mappers.UserDtoMapper;
+import com.homework.dto.mappers.impl.UserDtoMapperImpl;
 import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.fabric.Fabric;
+import com.homework.repository.TestUtil;
+import com.homework.repository.impl.CompanyRepositoryImpl;
+import com.homework.repository.impl.PositionRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
-
+@Testcontainers
 class UserDtoMapperImplTest {
-    private UserDtoMapper mapper = Fabric.getUserDtoMapper();
+    @Container
+    static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(),postgres.getPassword());
+
+    private UserDtoMapper mapper = new UserDtoMapperImpl(new CompanyRepositoryImpl(connectionManager), new PositionRepositoryImpl(connectionManager));
 
     @Test
     void mapIncomingToUser() {

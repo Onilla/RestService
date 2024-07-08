@@ -3,7 +3,7 @@ package com.homework.util;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class InitProperties {
+public class PropertiesLoader {
 
     private static final Properties PROPERTIES = new Properties();
     private static final String PROPERTIES_FILE = "db.properties";
@@ -12,7 +12,7 @@ public class InitProperties {
         loadProperties();
     }
 
-    private InitProperties() {
+    private PropertiesLoader() {
     }
 
     public static String getProperties(String key) {
@@ -20,7 +20,7 @@ public class InitProperties {
     }
 
     private static void loadProperties() {
-        try (InputStream inFile = InitProperties.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
+        try (InputStream inFile = PropertiesLoader.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
             PROPERTIES.load(inFile);
         } catch (Exception e) {
             throw new IllegalStateException();

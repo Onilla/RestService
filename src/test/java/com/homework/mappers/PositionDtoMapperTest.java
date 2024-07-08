@@ -1,20 +1,33 @@
 package com.homework.mappers;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.dto.PositionIncomingDto;
 import com.homework.dto.PositionOutGoingDto;
 import com.homework.dto.PositionUpdateDto;
 import com.homework.dto.mappers.PositionDtoMapper;
+import com.homework.dto.mappers.impl.PositionDtoMapperImpl;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.fabric.Fabric;
+import com.homework.repository.TestUtil;
+import com.homework.repository.impl.UserRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
-
+@Testcontainers
 class PositionDtoMapperTest {
+    @Container
+    static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
 
-    private PositionDtoMapper mapper = Fabric.getPositionDtoMapper();
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(),postgres.getPassword());
+
+    private PositionDtoMapper mapper = new PositionDtoMapperImpl(new UserRepositoryImpl(connectionManager));
 
     @Test
     void mapIncomingToPosition() {

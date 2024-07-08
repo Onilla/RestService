@@ -1,9 +1,16 @@
 package com.homework.servlet;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.dto.PositionIncomingDto;
 import com.homework.dto.PositionUpdateDto;
+import com.homework.dto.mappers.impl.PositionDtoMapperImpl;
 import com.homework.exception.NotFoundException;
+import com.homework.repository.TestUtil;
+import com.homework.repository.impl.PositionRepositoryImpl;
+import com.homework.repository.impl.UserRepositoryImpl;
 import com.homework.service.PositionService;
+import com.homework.service.impl.PositionServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +22,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,11 +37,20 @@ import static org.mockito.Mockito.when;
 @ExtendWith(
         MockitoExtension.class
 )
+@Testcontainers
 class PositionServletTest {
 
+    @Container
+    static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(), postgres.getPassword());
+
     private static final PositionService mockPositionService = mock(PositionService.class);
+
     @InjectMocks
-    private static final PositionServlet servlet = new PositionServlet();
+    private PositionServlet servlet = new PositionServlet(new PositionServiceImpl(new PositionRepositoryImpl(connectionManager),
+            new PositionDtoMapperImpl(new UserRepositoryImpl(connectionManager))));
 
     private final HttpServletResponse response = mock(HttpServletResponse.class);
 

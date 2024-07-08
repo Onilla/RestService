@@ -53,10 +53,6 @@ public class CompanyRepositoryImpl implements Repository<Company, Long> {
 
     private final ConnectionManager connectionManager;
 
-    public CompanyRepositoryImpl() {
-        this.connectionManager = Fabric.getConnectionManager();
-    }
-
     public CompanyRepositoryImpl(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }

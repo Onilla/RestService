@@ -4,7 +4,6 @@ import com.homework.dto.CompanyIncomingDto;
 import com.homework.dto.CompanyOutGoingDto;
 import com.homework.dto.CompanyUpdateDto;
 import com.homework.dto.mappers.CompanyDtoMapper;
-import com.homework.dto.mappers.impl.CompanyDtoMapperImpl;
 import com.homework.entity.Company;
 import com.homework.exception.NotFoundException;
 import com.homework.fabric.Fabric;
@@ -18,8 +17,8 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyRepositoryImpl companyRepository;
     private CompanyDtoMapper dtoMapper;
 
-    public CompanyServiceImpl(){
-        this.companyRepository = Fabric.getCompanyRepository();
+    public CompanyServiceImpl(CompanyRepositoryImpl companyRepository){
+        this.companyRepository = companyRepository;
         this.dtoMapper = Fabric.getDtoMapper();
     }
 

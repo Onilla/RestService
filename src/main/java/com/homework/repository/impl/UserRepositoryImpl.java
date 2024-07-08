@@ -66,9 +66,6 @@ public class UserRepositoryImpl implements Repository<User, Long> {
 
     private ConnectionManager connectionManager;
 
-    public UserRepositoryImpl() {
-        this.connectionManager = Fabric.getConnectionManager();
-    }
 
     public UserRepositoryImpl(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;

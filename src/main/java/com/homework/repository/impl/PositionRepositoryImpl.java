@@ -62,10 +62,6 @@ public class PositionRepositoryImpl implements Repository<Position, Long> {
 
     private ConnectionManager connectionManager;
 
-    public PositionRepositoryImpl(){
-        this.connectionManager = Fabric.getConnectionManager();
-    }
-
     public PositionRepositoryImpl(ConnectionManager connectionManager){
         this.connectionManager = connectionManager;}
 

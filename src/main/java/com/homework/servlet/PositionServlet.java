@@ -24,8 +24,8 @@ public class PositionServlet extends HttpServlet {
     private transient PositionService positionService;
     private ObjectMapper objectMapper;
 
-    public PositionServlet(){
-        this.positionService = Fabric.getPositionService();
+    public PositionServlet(PositionService positionService){
+        this.positionService = positionService;
         this.objectMapper = Fabric.getObjectMapper();
     }
 

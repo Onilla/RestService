@@ -1,10 +1,15 @@
 package com.homework.service;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.dto.*;
+import com.homework.dto.mappers.impl.PositionDtoMapperImpl;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.exception.NotFoundException;
+import com.homework.repository.TestUtil;
 import com.homework.repository.impl.PositionRepositoryImpl;
+import com.homework.repository.impl.UserRepositoryImpl;
 import com.homework.service.impl.PositionServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,6 +19,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +32,21 @@ import static org.mockito.Mockito.when;
 @ExtendWith(
         MockitoExtension.class
 )
+@Testcontainers
 class PositionServiceTest {
+
+    @Container
+    static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(), postgres.getPassword());
+
     @Mock
     private PositionRepositoryImpl mockRepository;
 
     @InjectMocks
-    private PositionServiceImpl service;
+    public PositionServiceImpl service = new PositionServiceImpl(new PositionRepositoryImpl(connectionManager),
+            new PositionDtoMapperImpl(new UserRepositoryImpl(connectionManager)));
 
     @Test
     void delete() throws NotFoundException {

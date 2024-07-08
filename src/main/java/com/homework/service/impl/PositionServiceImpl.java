@@ -18,9 +18,9 @@ public class PositionServiceImpl implements PositionService {
     private PositionRepositoryImpl positionRepository;
     private PositionDtoMapper dtoMapper;
 
-    public PositionServiceImpl(){
-        this.positionRepository = Fabric.getPositionRepository();
-        this.dtoMapper = Fabric.getPositionDtoMapper();
+    public PositionServiceImpl(PositionRepositoryImpl positionRepository, PositionDtoMapper dtoMapper){
+        this.positionRepository = positionRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override

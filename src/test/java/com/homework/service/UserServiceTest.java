@@ -1,10 +1,16 @@
 package com.homework.service;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.dto.*;
+import com.homework.dto.mappers.impl.UserDtoMapperImpl;
 import com.homework.entity.Company;
 import com.homework.entity.Position;
 import com.homework.entity.User;
 import com.homework.exception.NotFoundException;
+import com.homework.repository.TestUtil;
+import com.homework.repository.impl.CompanyRepositoryImpl;
+import com.homework.repository.impl.PositionRepositoryImpl;
 import com.homework.repository.impl.UserRepositoryImpl;
 import com.homework.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +21,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +34,22 @@ import static org.mockito.Mockito.when;
 @ExtendWith(
         MockitoExtension.class
 )
-
+@Testcontainers
 class UserServiceTest {
+
+    @Container
+    static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(), postgres.getPassword());
+
     @Mock
     private UserRepositoryImpl mockRepository;
 
     @InjectMocks
-    private UserServiceImpl service;
+    private UserServiceImpl service = new UserServiceImpl(new UserRepositoryImpl(connectionManager),
+            new UserDtoMapperImpl(new CompanyRepositoryImpl(connectionManager),
+                    new PositionRepositoryImpl(connectionManager)));
 
     @Test
     void delete() throws NotFoundException {

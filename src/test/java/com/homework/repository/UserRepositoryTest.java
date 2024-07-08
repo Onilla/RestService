@@ -18,6 +18,7 @@ class UserRepositoryTest {
 
     @Container
     static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
     ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
             postgres.getUsername(),postgres.getPassword());
 

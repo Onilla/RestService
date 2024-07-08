@@ -24,8 +24,8 @@ public class CompanyServlet extends HttpServlet {
     private transient CompanyService companyService;
     private ObjectMapper objectMapper;
 
-    public CompanyServlet(){
-        this.companyService = Fabric.getCompanyService();
+    public CompanyServlet(CompanyService companyService){
+        this.companyService = companyService;
         this.objectMapper = Fabric.getObjectMapper();
     }
 

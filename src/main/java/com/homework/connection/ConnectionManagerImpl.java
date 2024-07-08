@@ -1,6 +1,6 @@
 package com.homework.connection;
 
-import com.homework.util.InitProperties;
+import com.homework.util.PropertiesLoader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,11 +21,11 @@ public class ConnectionManagerImpl implements ConnectionManager{
     }
     @Override
     public Connection getConnection() throws SQLException {
-        loadDriver(InitProperties.getProperties(DRAIVER));
+        loadDriver(PropertiesLoader.getProperties(DRAIVER));
         return DriverManager.getConnection(
-                InitProperties.getProperties(URL),
-                InitProperties.getProperties(USERNAME),
-                InitProperties.getProperties(PASSWORD)
+                PropertiesLoader.getProperties(URL),
+                PropertiesLoader.getProperties(USERNAME),
+                PropertiesLoader.getProperties(PASSWORD)
         );
     }
 }

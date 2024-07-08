@@ -18,9 +18,9 @@ public class UserServiceImpl implements UserService {
     private UserRepositoryImpl userRepository;
     private UserDtoMapper dtoMapper;
 
-    public UserServiceImpl(){
-        this. userRepository = Fabric.getUserRepository();
-        this.dtoMapper = Fabric.getUserDtoMapper();
+    public UserServiceImpl(UserRepositoryImpl userRepository, UserDtoMapperImpl dtoMapper){
+        this. userRepository = userRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override

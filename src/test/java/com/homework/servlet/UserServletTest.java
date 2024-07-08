@@ -1,15 +1,26 @@
 package com.homework.servlet;
 
+import com.homework.connection.ConnectionManager;
+import com.homework.connection.ContainerConnectionManager;
 import com.homework.dto.UserIncomingDto;
 import com.homework.dto.UserUpdateDto;
+import com.homework.dto.mappers.impl.UserDtoMapperImpl;
 import com.homework.exception.NotFoundException;
+import com.homework.repository.TestUtil;
+import com.homework.repository.impl.CompanyRepositoryImpl;
+import com.homework.repository.impl.PositionRepositoryImpl;
+import com.homework.repository.impl.UserRepositoryImpl;
 import com.homework.service.UserService;
+import com.homework.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mockito.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.*;
 
@@ -18,7 +29,15 @@ import static org.mockito.Mockito.*;
 @ExtendWith(
         MockitoExtension.class
 )
+@Testcontainers
 class UserServletTest {
+
+    @Container
+    static PostgreSQLContainer<?> postgres = TestUtil.testUtil();
+
+    ConnectionManager connectionManager = new ContainerConnectionManager(postgres.getJdbcUrl(),
+            postgres.getUsername(), postgres.getPassword());
+
     @Mock
     private UserService mockUserService;
     @Mock
@@ -29,7 +48,8 @@ class UserServletTest {
     private BufferedReader mockBufferedReader;
 
     @InjectMocks
-    private UserServlet servlet;
+    private UserServlet servlet = new UserServlet(new UserServiceImpl(new UserRepositoryImpl(connectionManager),
+            new UserDtoMapperImpl(new CompanyRepositoryImpl(connectionManager), new PositionRepositoryImpl(connectionManager))));
 
     @BeforeEach
     void setUp() throws IOException {

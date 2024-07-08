@@ -18,8 +18,8 @@ import java.util.Optional;
 public class PositionDtoMapperImpl implements PositionDtoMapper {
     Repository<User, Long> userRepository;
 
-    public PositionDtoMapperImpl(){
-        this.userRepository = Fabric.getUserRepository();
+    public PositionDtoMapperImpl(UserRepositoryImpl userRepository){
+        this.userRepository = userRepository;
     }
 
     @Override
